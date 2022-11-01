@@ -4,10 +4,9 @@ import {
   BrowserRouter
 } from "react-router-dom";
 import App from './app/app';
+import { roomOffers } from './mocks/offers';
+import { reviews } from './mocks/reviews';
 
-const Setting = {
-  PLACES_COUNT: 312,
-};
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement,
@@ -16,7 +15,8 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-    <App placesCount={Setting.PLACES_COUNT}/>
+    <App  roomOffers={roomOffers} reviews={reviews}
+   />
   </React.StrictMode>
   </BrowserRouter>
 

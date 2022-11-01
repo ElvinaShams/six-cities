@@ -1,13 +1,14 @@
-import { CardBlock } from '../../components/CardBlock';
+import { CardList } from '../../components/CardList';
 import { Header } from '../../components/Header';
 import { Location } from '../../components/Location';
 import { Sort } from '../../components/Sort';
+import { RoomOffer } from '../../types/room-offer';
 
-type HomeProps = {
-  placesCount: number,
+type MainProps = {
+  roomOffers: RoomOffer[],
 };
 
-function Main({ placesCount }: HomeProps) {
+function Main({ roomOffers }: MainProps) {
   return (
     <div className="page page--gray page--main">
       <Header />
@@ -21,7 +22,7 @@ function Main({ placesCount }: HomeProps) {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">
-                {placesCount} places to stay in Amsterdam
+                {roomOffers.length} places to stay in Amsterdam
               </b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
@@ -33,13 +34,7 @@ function Main({ placesCount }: HomeProps) {
                 </span>
                 <Sort />
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <CardBlock />
-                <CardBlock />
-                <CardBlock />
-                <CardBlock />
-                <CardBlock />
-              </div>
+              <CardList roomOffers={roomOffers} />
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

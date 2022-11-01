@@ -1,0 +1,1 @@
+export { ApartmentСard } from './ApartmentСard';

@@ -8,7 +8,7 @@ type PrivateRouteProps = RouteProps & {
 };
 
 function PrivateRoute({ children, redirectTo }: PrivateRouteProps) {
-  const shouldRedirect = false;
+  const shouldRedirect = true;
 
   if (!shouldRedirect) {
     return <Navigate to={redirectTo} />;
