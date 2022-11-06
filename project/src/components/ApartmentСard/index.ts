@@ -1,1 +1,0 @@
-export { ApartmentСard } from './ApartmentСard';

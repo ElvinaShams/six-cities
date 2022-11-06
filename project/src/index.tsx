@@ -15,8 +15,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-    <App  roomOffers={roomOffers} reviews={reviews}
-   />
+    <App roomOffers={roomOffers} reviews={reviews} />
   </React.StrictMode>
   </BrowserRouter>
 

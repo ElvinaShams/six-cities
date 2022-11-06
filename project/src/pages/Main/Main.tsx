@@ -1,6 +1,7 @@
 import { CardList } from '../../components/CardList';
 import { Header } from '../../components/Header';
-import { Location } from '../../components/Location';
+import { Tabs } from '../../components/Tabs';
+import { Map } from '../../components/Map';
 import { Sort } from '../../components/Sort';
 import { RoomOffer } from '../../types/room-offer';
 
@@ -11,12 +12,9 @@ type MainProps = {
 function Main({ roomOffers }: MainProps) {
   return (
     <div className="page page--gray page--main">
-      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
-        <div className="tabs">
-          <Location />
-        </div>
+        <Tabs />
         <div className="cities">
           <div className="cities__places-container container">
             <section className="cities__places places">
@@ -24,20 +22,11 @@ function Main({ roomOffers }: MainProps) {
               <b className="places__found">
                 {roomOffers.length} places to stay in Amsterdam
               </b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <Sort />
-              </form>
+              <Sort />
               <CardList roomOffers={roomOffers} />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map className="cities" />
             </div>
           </div>
         </div>

@@ -8,6 +8,7 @@ import { NotFound } from '../pages/NotFound';
 import { PrivateRoute } from '../components/PrivateRoute';
 import { RoomOffer } from '../types/room-offer';
 import { Review } from '../types/review';
+import { Layout } from '../components/Layout';
 
 type AppProps = {
   roomOffers: RoomOffer[],
@@ -17,25 +18,22 @@ type AppProps = {
 function App({ roomOffers, reviews }: AppProps): JSX.Element {
   return (
     <Routes>
-      <Route
-        path={AppRoute.Main}
-        index
-        element={<Main roomOffers={roomOffers} />}
-      />
+      <Route path={AppRoute.Main} element={<Layout />}>
+        <Route index element={<Main roomOffers={roomOffers} />} />
 
-      <Route path={AppRoute.SignIn} element={<Login />} />
+        <Route path={AppRoute.SignIn} element={<Login />} />
 
-      <Route
-        path={AppRoute.Favorites}
-        element={
-          <PrivateRoute redirectTo={AppRoute.Main}>
-            <Favorites roomOffers={roomOffers} />
-          </PrivateRoute>
-        }
-      />
+        <Route
+          path={AppRoute.Favorites}
+          element={
+            <PrivateRoute redirectTo={AppRoute.Main}>
+              <Favorites roomOffers={roomOffers} />
+            </PrivateRoute>
+          }
+        />
 
-      <Route path={AppRoute.Room} element={<Property />} />
-
+        <Route path={`${AppRoute.Room}/:id`} element={<Property />} />
+      </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

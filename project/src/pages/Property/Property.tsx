@@ -1,4 +1,6 @@
+import { Link } from 'react-router-dom';
 import { Header } from '../../components/Header';
+import { AppRoute } from '../../const';
 
 function Property() {
   return (
@@ -345,7 +347,7 @@ function Property() {
                     </div>
                   </div>
                   <h2 className="place-card__name">
-                    <a href="#">Wood and stone place</a>
+                    <Link to={AppRoute.Room}>Wood and stone place</Link>
                   </h2>
                   <p className="place-card__type">Private room</p>
                 </div>

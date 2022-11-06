@@ -2,15 +2,17 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
-import { FavoriteCard } from '../FavoriteCard';
+import { ApartmentCard } from '../ApartmentCard';
 
 type FavoriteCityProps = {
-  offers: RoomOffer[],
+  roomOffers: RoomOffer[],
   city: string,
 };
 
-function FavoriteCity({ offers, city }: FavoriteCityProps) {
+function FavoriteCity({ roomOffers, city }: FavoriteCityProps) {
   const [, setActiveCard] = useState(0);
+
+  const handleMouseOver = (id: number) => setActiveCard(id);
 
   return (
     <li className="favorites__locations-items">
@@ -22,13 +24,12 @@ function FavoriteCity({ offers, city }: FavoriteCityProps) {
         </div>
       </div>
       <div className="favorites__places">
-        {offers.map((offer) => (
-          <FavoriteCard
-            offer={offer}
-            key={offer.id}
-            onMouseOver={() => {
-              setActiveCard(offer.id);
-            }}
+        {roomOffers.map((roomOffer) => (
+          <ApartmentCard
+            card="favorite"
+            roomOffer={roomOffer}
+            key={roomOffer.id}
+            onMouseOver={handleMouseOver}
             onMouseLeave={() => {
               setActiveCard(0);
             }}
