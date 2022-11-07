@@ -2,7 +2,7 @@ import { generatePath, Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
 import { getRating } from '../../util';
-import { CardButton } from '../CardButton';
+import { CardBookmarkButton } from '../CardBookmarkButton';
 
 type ApartmentCardProps = {
   card: 'main' | 'favorite',
@@ -17,14 +17,12 @@ const properties = {
     width: 260,
     height: 200,
     placeCardActive: '',
-    AppRoute: AppRoute.Room,
   },
   favorite: {
     className: 'favorites',
     width: 150,
     height: 110,
     placeCardActive: 'place-card__bookmark-button--active',
-    AppRoute: AppRoute.Favorites,
   },
 };
 
@@ -34,7 +32,16 @@ function ApartmentCard({
   onMouseLeave,
   card,
 }: ApartmentCardProps) {
-  const { id, previewImage, isPremium, price, rating, title, type } = roomOffer;
+  const {
+    id,
+    previewImage,
+    isPremium,
+    price,
+    rating,
+    title,
+    type,
+    isFavorite,
+  } = roomOffer;
   const { className, width, height, placeCardActive } = properties[card];
 
   const ratingValue = getRating(rating);
@@ -43,11 +50,11 @@ function ApartmentCard({
     <article
       className={`${className}__places-card place-card`}
       onMouseOver={() => {
-        if (onMouseOver !== undefined) {
-          onMouseOver(id);
-        }
+        onMouseOver && onMouseOver(id);
       }}
-      onMouseLeave={() => onMouseLeave}
+      onMouseLeave={() => {
+        onMouseLeave && onMouseLeave(0);
+      }}
     >
       {isPremium && (
         <div className="place-card__mark">
@@ -55,7 +62,7 @@ function ApartmentCard({
         </div>
       )}
       <div className={`${className}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Room}/${id}`}>
+        <Link to={generatePath(AppRoute.Room, { id: `${id}` })}>
           <img
             className="place-card__image"
             src={previewImage}
@@ -71,7 +78,10 @@ function ApartmentCard({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <CardButton placeCardActive={placeCardActive} />
+          <CardBookmarkButton
+            placeCardActive={placeCardActive}
+            isFavorite={isFavorite}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
@@ -80,9 +90,7 @@ function ApartmentCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={generatePath(AppRoute.Room, { id: roomOffer.id })}>
-            {title}
-          </Link>
+          <Link to={generatePath(AppRoute.Room, { id: `${id}` })}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

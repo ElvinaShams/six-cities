@@ -32,7 +32,7 @@ function App({ roomOffers, reviews }: AppProps): JSX.Element {
           }
         />
 
-        <Route path={`${AppRoute.Room}/:id`} element={<Property />} />
+        <Route path={AppRoute.Room} element={<Property />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

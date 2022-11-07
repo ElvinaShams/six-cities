@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router-dom';
+import { AppRoute } from '../../const';
 import { Header } from '../Header';
 import { Logo } from '../Logo';
 
@@ -7,7 +8,11 @@ function Layout() {
     <>
       <Header />
       <Outlet />
-      <Logo type="footer" />
+      {AppRoute.Favorites && (
+        <footer>
+          <Logo type="footer" />
+        </footer>
+      )}
     </>
   );
 }

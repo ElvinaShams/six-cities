@@ -10,10 +10,6 @@ type FavoriteCityProps = {
 };
 
 function FavoriteCity({ roomOffers, city }: FavoriteCityProps) {
-  const [, setActiveCard] = useState(0);
-
-  const handleMouseOver = (id: number) => setActiveCard(id);
-
   return (
     <li className="favorites__locations-items">
       <div className="favorites__locations locations locations--current">
@@ -29,10 +25,6 @@ function FavoriteCity({ roomOffers, city }: FavoriteCityProps) {
             card="favorite"
             roomOffer={roomOffer}
             key={roomOffer.id}
-            onMouseOver={handleMouseOver}
-            onMouseLeave={() => {
-              setActiveCard(0);
-            }}
           />
         ))}
       </div>

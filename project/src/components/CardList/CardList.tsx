@@ -19,9 +19,7 @@ function CardList({ roomOffers }: CardListProps) {
           roomOffer={roomOffer}
           key={roomOffer.id}
           onMouseOver={handleMouseOver}
-          onMouseLeave={() => {
-            setActiveCard(0);
-          }}
+          onMouseLeave={handleMouseOver}
         />
       ))}
     </div>
