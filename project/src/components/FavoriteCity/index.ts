@@ -1,0 +1,1 @@
+export { FavoriteCity } from './FavoriteCity';

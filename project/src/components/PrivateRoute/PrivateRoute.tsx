@@ -1,5 +1,4 @@
 import { RouteProps, Navigate } from 'react-router-dom';
-import React from 'react';
 import { AppRoute } from '../../const';
 
 type PrivateRouteProps = RouteProps & {
@@ -8,7 +7,7 @@ type PrivateRouteProps = RouteProps & {
 };
 
 function PrivateRoute({ children, redirectTo }: PrivateRouteProps) {
-  const shouldRedirect = false;
+  const shouldRedirect = true;
 
   if (!shouldRedirect) {
     return <Navigate to={redirectTo} />;
