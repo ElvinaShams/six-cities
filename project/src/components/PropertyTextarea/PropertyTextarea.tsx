@@ -1,6 +1,5 @@
-import React from 'react';
 type PropertyTextareaProps = {
-  onChange: (event: any) => void
+  onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void
   review: string,
 };
 

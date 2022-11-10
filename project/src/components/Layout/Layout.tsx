@@ -1,18 +1,19 @@
 import { Outlet } from 'react-router-dom';
-import { AppRoute } from '../../const';
 import { Header } from '../Header';
-import { Logo } from '../Logo';
+import { Footer } from '../Footer';
 
-function Layout() {
+type LayoutProps = {
+  hasFooter?: boolean,
+  children: React.ReactNode,
+};
+
+function Layout({ children, hasFooter = false }: LayoutProps): JSX.Element {
   return (
     <>
       <Header />
+      {children}
       <Outlet />
-      {AppRoute.Favorites && (
-        <footer>
-          <Logo type="footer" />
-        </footer>
-      )}
+      {hasFooter && <Footer />}
     </>
   );
 }

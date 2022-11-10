@@ -8,7 +8,7 @@ type ApartmentCardProps = {
   card: 'main' | 'favorite',
   roomOffer: RoomOffer,
   onMouseOver?: (id: number) => void,
-  onMouseLeave?: (id: number) => void,
+  onMouseLeave?: (id: number | null) => void,
 };
 
 const properties = {
@@ -53,7 +53,7 @@ function ApartmentCard({
         onMouseOver && onMouseOver(id);
       }}
       onMouseLeave={() => {
-        onMouseLeave && onMouseLeave(0);
+        onMouseLeave && onMouseLeave(null);
       }}
     >
       {isPremium && (

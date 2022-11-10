@@ -7,9 +7,9 @@ type CardListProps = {
 };
 
 function CardList({ roomOffers }: CardListProps) {
-  const [, setActiveCard] = useState(0);
+  const [, setActiveCard] = useState<number | null>(0);
 
-  const handleMouseOver = (id: number) => setActiveCard(id);
+  const handleMouseOver = (id: number | null) => setActiveCard(id);
 
   return (
     <div className="cities__places-list places__list tabs__content">
