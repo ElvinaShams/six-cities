@@ -4,12 +4,24 @@ import { Map } from '../../components/Map';
 import { Sort } from '../../components/Sort';
 import { RoomOffer } from '../../types/room-offer';
 import { Layout } from '../../components/Layout';
+import { City } from '../../types/map';
+import { useState } from 'react';
 
 type MainProps = {
   roomOffers: RoomOffer[],
+  city: City,
 };
 
-function Main({ roomOffers }: MainProps) {
+function Main({ roomOffers, city }: MainProps) {
+  const [activeCard, setActiveCard] = useState<number | null>(0);
+
+  const points = roomOffers.map((roomOffer) => {
+    const { id } = roomOffer;
+    const { latitude } = roomOffer.location;
+    const { longitude } = roomOffer.location;
+    return { id, latitude, longitude };
+  });
+
   return (
     <>
       <div className="page page--gray page--main">
@@ -25,10 +37,18 @@ function Main({ roomOffers }: MainProps) {
                     {roomOffers.length} places to stay in Amsterdam
                   </b>
                   <Sort />
-                  <CardList roomOffers={roomOffers} />
+                  <CardList
+                    roomOffers={roomOffers}
+                    setActiveCard={setActiveCard}
+                  />
                 </section>
                 <div className="cities__right-section">
-                  <Map className="cities" />
+                  <Map
+                    className="cities"
+                    city={city}
+                    points={points}
+                    activeCard={activeCard}
+                  />
                 </div>
               </div>
             </div>

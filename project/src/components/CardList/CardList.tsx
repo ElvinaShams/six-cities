@@ -1,14 +1,12 @@
 import { RoomOffer } from '../../types/room-offer';
 import { ApartmentCard } from '../ApartmentCard';
-import { useState } from 'react';
 
 type CardListProps = {
   roomOffers: RoomOffer[],
+  setActiveCard: (id: number | null) => void,
 };
 
-function CardList({ roomOffers }: CardListProps) {
-  const [, setActiveCard] = useState<number | null>(0);
-
+function CardList({ roomOffers, setActiveCard }: CardListProps) {
   const handleMouseOver = (id: number | null) => setActiveCard(id);
 
   return (
