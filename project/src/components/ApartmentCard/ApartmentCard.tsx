@@ -5,7 +5,7 @@ import { getRating } from '../../util';
 import { CardBookmarkButton } from '../CardBookmarkButton';
 
 type ApartmentCardProps = {
-  card: 'main' | 'favorite',
+  card: 'main' | 'favorite' | 'property',
   roomOffer: RoomOffer,
   onMouseOver?: (id: number) => void,
   onMouseLeave?: (id: number | null) => void,
@@ -22,6 +22,12 @@ const properties = {
     className: 'favorites',
     width: 150,
     height: 110,
+    placeCardActive: 'place-card__bookmark-button--active',
+  },
+  property: {
+    className: 'near',
+    width: 260,
+    height: 200,
     placeCardActive: 'place-card__bookmark-button--active',
   },
 };

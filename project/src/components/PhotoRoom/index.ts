@@ -1,0 +1,1 @@
+export { PhotoRoom } from './PhotoRoom';

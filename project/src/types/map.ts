@@ -1,5 +1,5 @@
 export type City = {
-  title: string,
+  name: string,
   latitude: number;
   longitude: number;
   zoom: number;
@@ -12,3 +12,4 @@ export type Point = {
 };
 
 export type Points = Point[];
+

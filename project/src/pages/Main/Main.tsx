@@ -38,6 +38,7 @@ function Main({ roomOffers, city }: MainProps) {
                   </b>
                   <Sort />
                   <CardList
+                    page="main"
                     roomOffers={roomOffers}
                     setActiveCard={setActiveCard}
                   />

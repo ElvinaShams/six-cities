@@ -8,21 +8,20 @@ import { NotFound } from '../pages/NotFound';
 import { PrivateRoute } from '../components/PrivateRoute';
 import { RoomOffer } from '../types/room-offer';
 import { Review } from '../types/review';
-import { City, Points } from '../types/map';
+import { City } from '../types/map';
 
 type AppProps = {
   roomOffers: RoomOffer[],
   reviews: Review[],
   city: City,
-  points: Points,
 };
 
-function App({ roomOffers, reviews, city, points }: AppProps): JSX.Element {
+function App({ roomOffers, reviews, city }: AppProps): JSX.Element {
   return (
     <Routes>
       <Route
         path={AppRoute.Main}
-        element={<Main roomOffers={roomOffers} city={city} points={points} />}
+        element={<Main roomOffers={roomOffers} city={city} />}
       />
 
       <Route path={AppRoute.SignIn} element={<Login />} />
@@ -35,7 +34,10 @@ function App({ roomOffers, reviews, city, points }: AppProps): JSX.Element {
           </PrivateRoute>
         }
       />
-      <Route path={AppRoute.Room} element={<Property reviews={reviews} />} />
+      <Route
+        path={AppRoute.Room}
+        element={<Property reviews={reviews} roomOffers={roomOffers} />}
+      />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

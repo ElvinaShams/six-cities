@@ -1,5 +1,5 @@
 import { useEffect, useState, MutableRefObject, useRef } from 'react';
-import { Map } from 'leaflet';
+import { Map, TileLayer } from 'leaflet';
 import { City } from '../types/map';
 import { LayerConfig } from '../const';
 
@@ -20,11 +20,11 @@ function useMap(
         zoom: city.zoom,
       });
 
-      leaflet
-        .tileLayer(LayerConfig.BaseUrl, {
-          attribution: LayerConfig.Attribution,
-        })
-        .addTo(instance);
+      const layer = new TileLayer(LayerConfig.BaseUrl, {
+        attribution: LayerConfig.Attribution,
+      });
+
+      instance.addLayer(layer);
 
       setMap(instance);
       isRenderedRef.current = true;
