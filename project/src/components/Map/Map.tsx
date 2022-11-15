@@ -15,13 +15,13 @@ type MapProps = {
 const defaultCustomIcon = new Icon({
   iconUrl: MapIconUrl.Default,
   iconSize: [IconSize.width, IconSize.height],
-  iconAnchor: [iconAnchor.width, iconAnchor.height],
+  iconAnchor: [iconAnchor.width / 2, iconAnchor.height],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: MapIconUrl.Active,
   iconSize: [IconSize.width, IconSize.height],
-  iconAnchor: [iconAnchor.width, iconAnchor.height],
+  iconAnchor: [iconAnchor.width / 2, iconAnchor.height],
 });
 
 function Map({ className, city, points, activeCard }: MapProps) {
@@ -49,7 +49,7 @@ function Map({ className, city, points, activeCard }: MapProps) {
 
   return (
     <section className={`${className}__map map`}>
-      <div style={{ height: '500px' }} ref={mapRef}></div>
+      <div style={{ height: '100%' }} ref={mapRef}></div>
     </section>
   );
 }

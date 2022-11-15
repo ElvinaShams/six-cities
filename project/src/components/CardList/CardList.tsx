@@ -4,7 +4,7 @@ import { ApartmentCard } from '../ApartmentCard';
 type CardListProps = {
   roomOffers: RoomOffer[],
   page: 'main' | 'property'
-  setActiveCard: (id: number | null) => void,
+  onMouseOver?: (id: number | null) => void,
 };
 
 const propertiesPage = {
@@ -16,21 +16,22 @@ const propertiesPage = {
     className: 'near',
     card: 'property',
   }
-}
-function CardList({ roomOffers, setActiveCard }: CardListProps) {
-  const handleMouseOver = (id: number | null) => setActiveCard(id);
+} as const
+
+function CardList({ roomOffers, page, onMouseOver }: CardListProps) {
+
 
   const {className, card} = propertiesPage[page];
 
   return (
-    <div className={`${className}__places-list places__list tabs__content`}>
+    <div className={`${className}__places-list places__list tabs__content`} style = {{display:'flex', flexWrap:'wrap'}}>
       {roomOffers.map((roomOffer) => (
         <ApartmentCard
           card={card}
           roomOffer={roomOffer}
           key={roomOffer.id}
-          onMouseOver={handleMouseOver}
-          onMouseLeave={handleMouseOver}
+          onMouseOver={onMouseOver}
+          onMouseLeave={onMouseOver}
         />
       ))}
     </div>

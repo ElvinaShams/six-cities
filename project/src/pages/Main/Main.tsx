@@ -15,12 +15,13 @@ type MainProps = {
 function Main({ roomOffers, city }: MainProps) {
   const [activeCard, setActiveCard] = useState<number | null>(0);
 
-  const points = roomOffers.map((roomOffer) => {
-    const { id } = roomOffer;
-    const { latitude } = roomOffer.location;
-    const { longitude } = roomOffer.location;
-    return { id, latitude, longitude };
-  });
+  const handleMouseOver = (id: number | null) => setActiveCard(id);
+
+  const points = roomOffers.map((roomOffer) => ({
+    id: roomOffer.id,
+    latitude: roomOffer.location.latitude,
+    longitude: roomOffer.location.longitude,
+  }));
 
   return (
     <>
@@ -40,7 +41,7 @@ function Main({ roomOffers, city }: MainProps) {
                   <CardList
                     page="main"
                     roomOffers={roomOffers}
-                    setActiveCard={setActiveCard}
+                    onMouseOver={handleMouseOver}
                   />
                 </section>
                 <div className="cities__right-section">

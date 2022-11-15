@@ -8,14 +8,12 @@ type GalleryPhotosProps = {
 
 function GalleryPhotos({ roomOffer }: GalleryPhotosProps) {
   const { images } = roomOffer;
-  const renderImages = images.slice(0, MAX_COUNT_IMAGES);
-  return (
-    <div className="property__gallery">
-      {renderImages.map((image) => (
-        <PhotoRoom image={image} />
-      ))}
-    </div>
-  );
+
+  const renderImages = images
+    .slice(0, MAX_COUNT_IMAGES)
+    .map((image) => <PhotoRoom image={image} />);
+
+  return <div className="property__gallery">{renderImages}</div>;
 }
 
 export { GalleryPhotos };

@@ -13,7 +13,12 @@ type PropertyProps = {
 };
 
 function Property({ reviews, roomOffers }: PropertyProps) {
-  const [, setActiveCard] = useState<number | null>(0);
+  const renderGalleryPhoto = roomOffers.map((roomOffer) => (
+    <GalleryPhotos roomOffer={roomOffer} />
+  ));
+  const renderGallerySection = renderGalleryPhoto.find((d, index) =>
+    index === 1 ? d : ''
+  );
 
   return (
     <div className="page">
@@ -21,9 +26,7 @@ function Property({ reviews, roomOffers }: PropertyProps) {
         <main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
-              {roomOffers.map((roomOffer) => (
-                <GalleryPhotos roomOffer={roomOffer} />
-              ))}
+              {renderGallerySection}
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
@@ -133,11 +136,7 @@ function Property({ reviews, roomOffers }: PropertyProps) {
               <h2 className="near-places__title">
                 Other places in the neighbourhood
               </h2>
-              <CardList
-                page="property"
-                roomOffers={roomOffers}
-                setActiveCard={setActiveCard}
-              />
+              <CardList page="property" roomOffers={roomOffers} />
             </section>
           </div>
         </main>

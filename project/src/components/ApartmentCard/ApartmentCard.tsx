@@ -55,11 +55,12 @@ function ApartmentCard({
   return (
     <article
       className={`${className}__places-card place-card`}
+      style={{ width: '260px', marginLeft: '8px', marginBottom: '24px' }}
       onMouseOver={() => {
         onMouseOver && onMouseOver(id);
       }}
       onMouseLeave={() => {
-        onMouseLeave && onMouseLeave(null);
+        onMouseLeave && onMouseLeave(0);
       }}
     >
       {isPremium && (
