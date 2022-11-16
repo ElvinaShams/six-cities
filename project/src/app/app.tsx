@@ -36,7 +36,9 @@ function App({ roomOffers, reviews, city }: AppProps): JSX.Element {
       />
       <Route
         path={AppRoute.Room}
-        element={<Property reviews={reviews} roomOffers={roomOffers} />}
+        element={
+          <Property reviews={reviews} roomOffers={roomOffers} city={city} />
+        }
       />
       <Route path="*" element={<NotFound />} />
     </Routes>

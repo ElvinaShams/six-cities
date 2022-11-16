@@ -5,14 +5,9 @@ type ReviewItemProps = {
   review: Review,
 };
 
-const properties = {
-  width: 54,
-  height: 54,
-};
 function ReviewItem({ review }: ReviewItemProps) {
   const { rating, comment, date } = review;
   const { avatarUrl, name } = review.user;
-  const { width, height } = properties;
 
   const ratingValue = getRating(rating);
 
@@ -23,8 +18,6 @@ function ReviewItem({ review }: ReviewItemProps) {
           <img
             className="reviews__avatar user__avatar"
             src={avatarUrl}
-            width={width}
-            height={height}
             alt="Reviews avatar"
           />
         </div>

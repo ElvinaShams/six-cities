@@ -9,19 +9,19 @@ type MapProps = {
   className: 'cities' | 'property',
   city: City,
   points: Points,
-  activeCard: number | null,
+  activeCard?: number | null,
 };
 
 const defaultCustomIcon = new Icon({
   iconUrl: MapIconUrl.Default,
-  iconSize: [IconSize.width, IconSize.height],
-  iconAnchor: [iconAnchor.width / 2, iconAnchor.height],
+  iconSize: [IconSize.Width, IconSize.Height],
+  iconAnchor: [iconAnchor.Width / 2, iconAnchor.Height],
 });
 
 const currentCustomIcon = new Icon({
   iconUrl: MapIconUrl.Active,
-  iconSize: [IconSize.width, IconSize.height],
-  iconAnchor: [iconAnchor.width / 2, iconAnchor.height],
+  iconSize: [IconSize.Width, IconSize.Height],
+  iconAnchor: [iconAnchor.Width / 2, iconAnchor.Height],
 });
 
 function Map({ className, city, points, activeCard }: MapProps) {
@@ -29,7 +29,7 @@ function Map({ className, city, points, activeCard }: MapProps) {
   const map = useMap(mapRef, city);
 
   useEffect(() => {
-    if (map && activeCard !== null) {
+    if (map) {
       points.forEach((point) => {
         const marker = new Marker({
           lat: point.latitude,
@@ -38,7 +38,7 @@ function Map({ className, city, points, activeCard }: MapProps) {
 
         marker
           .setIcon(
-            activeCard !== undefined && point.id === activeCard
+            activeCard && point.id === activeCard
               ? currentCustomIcon
               : defaultCustomIcon
           )

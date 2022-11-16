@@ -1,24 +1,25 @@
-import { useState } from 'react';
 import { CardList } from '../../components/CardList';
 import { GalleryPhotos } from '../../components/GalleryPhotos';
 import { Layout } from '../../components/Layout';
+import { Map } from '../../components/Map';
 import { PropertyForm } from '../../components/PropertyForm';
 import { ReviewsList } from '../../components/ReviewsList';
+import { City } from '../../types/map';
 import { Review } from '../../types/review';
 import { RoomOffer } from '../../types/room-offer';
 
 type PropertyProps = {
   reviews: Review[],
   roomOffers: RoomOffer[],
+  city: City,
 };
 
-function Property({ reviews, roomOffers }: PropertyProps) {
-  const renderGalleryPhoto = roomOffers.map((roomOffer) => (
-    <GalleryPhotos roomOffer={roomOffer} />
-  ));
-  const renderGallerySection = renderGalleryPhoto.find((d, index) =>
-    index === 1 ? d : ''
-  );
+function Property({ reviews, roomOffers, city }: PropertyProps) {
+  const points = roomOffers.map((roomOffer) => ({
+    id: roomOffer.id,
+    latitude: roomOffer.location.latitude,
+    longitude: roomOffer.location.longitude,
+  }));
 
   return (
     <div className="page">
@@ -26,7 +27,7 @@ function Property({ reviews, roomOffers }: PropertyProps) {
         <main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
-              {renderGallerySection}
+              <GalleryPhotos roomOffers={roomOffers} />
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
@@ -129,7 +130,9 @@ function Property({ reviews, roomOffers }: PropertyProps) {
                 </section>
               </div>
             </div>
-            <section className="property__map map`" />
+            <section className="property__map map`">
+              <Map className="property" city={city} points={points} />
+            </section>
           </section>
           <div className="container">
             <section className="near-places places">

@@ -52,6 +52,9 @@ function ApartmentCard({
 
   const ratingValue = getRating(rating);
 
+  const ucFirst = (str: string) =>
+    !str ? str : str[0].toUpperCase() + str.slice(1);
+
   return (
     <article
       className={`${className}__places-card place-card`}
@@ -99,7 +102,7 @@ function ApartmentCard({
         <h2 className="place-card__name">
           <Link to={generatePath(AppRoute.Room, { id: `${id}` })}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{ucFirst(type)}</p>
       </div>
     </article>
   );

@@ -13,7 +13,7 @@ type MainProps = {
 };
 
 function Main({ roomOffers, city }: MainProps) {
-  const [activeCard, setActiveCard] = useState<number | null>(0);
+  const [activeCard, setActiveCard] = useState<number | null>(null);
 
   const handleMouseOver = (id: number | null) => setActiveCard(id);
 

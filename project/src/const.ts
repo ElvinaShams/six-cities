@@ -32,13 +32,13 @@ enum MapIconUrl {
 }
 
 enum IconSize {
-  width = 40,
-  height = 40,
+  Width = 27,
+  Height = 39,
 }
 
 enum iconAnchor {
-  width = 20,
-  height = 40,
+  Width = 13.5,
+  Height = 40,
 }
 
 const MAX_RATING = 5;
