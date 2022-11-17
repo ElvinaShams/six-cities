@@ -5,7 +5,7 @@ import { getRating } from '../../util';
 import { CardBookmarkButton } from '../CardBookmarkButton';
 
 type ApartmentCardProps = {
-  card: 'main' | 'favorite',
+  card: 'main' | 'favorite' | 'property',
   roomOffer: RoomOffer,
   onMouseOver?: (id: number) => void,
   onMouseLeave?: (id: number | null) => void,
@@ -22,6 +22,12 @@ const properties = {
     className: 'favorites',
     width: 150,
     height: 110,
+    placeCardActive: 'place-card__bookmark-button--active',
+  },
+  property: {
+    className: 'near-places',
+    width: 260,
+    height: 200,
     placeCardActive: 'place-card__bookmark-button--active',
   },
 };
@@ -46,14 +52,16 @@ function ApartmentCard({
 
   const ratingValue = getRating(rating);
 
+  const getFirstCapital = (str: string) => str[0]?.toUpperCase() + str.slice(1);
+
   return (
     <article
-      className={`${className}__places-card place-card`}
+      className={`${className}__card place-card`}
       onMouseOver={() => {
-        onMouseOver && onMouseOver(id);
+        onMouseOver?.(id);
       }}
       onMouseLeave={() => {
-        onMouseLeave && onMouseLeave(null);
+        onMouseLeave?.(0);
       }}
     >
       {isPremium && (
@@ -92,7 +100,7 @@ function ApartmentCard({
         <h2 className="place-card__name">
           <Link to={generatePath(AppRoute.Room, { id: `${id}` })}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{getFirstCapital(type)}</p>
       </div>
     </article>
   );

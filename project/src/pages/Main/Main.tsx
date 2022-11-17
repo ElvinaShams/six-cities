@@ -4,12 +4,25 @@ import { Map } from '../../components/Map';
 import { Sort } from '../../components/Sort';
 import { RoomOffer } from '../../types/room-offer';
 import { Layout } from '../../components/Layout';
+import { City } from '../../types/map';
+import { useState } from 'react';
 
 type MainProps = {
   roomOffers: RoomOffer[],
+  city: City,
 };
 
-function Main({ roomOffers }: MainProps) {
+function Main({ roomOffers, city }: MainProps) {
+  const [activeCard, setActiveCard] = useState<number | null>(null);
+
+  const handleMouseOver = (id: number | null) => setActiveCard(id);
+
+  const points = roomOffers.map((roomOffer) => ({
+    id: roomOffer.id,
+    latitude: roomOffer.location.latitude,
+    longitude: roomOffer.location.longitude,
+  }));
+
   return (
     <>
       <div className="page page--gray page--main">
@@ -25,10 +38,19 @@ function Main({ roomOffers }: MainProps) {
                     {roomOffers.length} places to stay in Amsterdam
                   </b>
                   <Sort />
-                  <CardList roomOffers={roomOffers} />
+                  <CardList
+                    page="main"
+                    roomOffers={roomOffers}
+                    onMouseOver={handleMouseOver}
+                  />
                 </section>
                 <div className="cities__right-section">
-                  <Map className="cities" />
+                  <Map
+                    className="cities"
+                    city={city}
+                    points={points}
+                    activeCard={activeCard}
+                  />
                 </div>
               </div>
             </div>

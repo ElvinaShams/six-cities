@@ -1,25 +1,35 @@
 import { RoomOffer } from '../../types/room-offer';
 import { ApartmentCard } from '../ApartmentCard';
-import { useState } from 'react';
 
 type CardListProps = {
   roomOffers: RoomOffer[],
+  page: 'main' | 'property'
+  onMouseOver?: (id: number | null) => void,
 };
 
-function CardList({ roomOffers }: CardListProps) {
-  const [, setActiveCard] = useState<number | null>(0);
+const propertiesPage = {
+  main: {
+  className: 'cities',
+  card: 'main'
+  },
+  property: {
+    className: 'near',
+    card: 'property',
+  }
+} as const
 
-  const handleMouseOver = (id: number | null) => setActiveCard(id);
+function CardList({ roomOffers, page, onMouseOver }: CardListProps) {
+  const {className, card} = propertiesPage[page];
 
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className={`${className}__places-list`} >
       {roomOffers.map((roomOffer) => (
         <ApartmentCard
-          card="main"
+          card={card}
           roomOffer={roomOffer}
           key={roomOffer.id}
-          onMouseOver={handleMouseOver}
-          onMouseLeave={handleMouseOver}
+          onMouseOver={onMouseOver}
+          onMouseLeave={onMouseOver}
         />
       ))}
     </div>

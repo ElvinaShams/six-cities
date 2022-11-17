@@ -4,6 +4,7 @@ import {
   BrowserRouter
 } from "react-router-dom";
 import App from './app/app';
+import { CITY } from './mocks/cities';
 import { roomOffers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 
@@ -15,7 +16,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-    <App roomOffers={roomOffers} reviews={reviews} />
+    <App roomOffers={roomOffers} reviews={reviews} city={CITY}/>
   </React.StrictMode>
   </BrowserRouter>
 
