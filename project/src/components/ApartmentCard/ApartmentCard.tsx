@@ -25,7 +25,7 @@ const properties = {
     placeCardActive: 'place-card__bookmark-button--active',
   },
   property: {
-    className: 'near',
+    className: 'near-places',
     width: 260,
     height: 200,
     placeCardActive: 'place-card__bookmark-button--active',
@@ -52,18 +52,16 @@ function ApartmentCard({
 
   const ratingValue = getRating(rating);
 
-  const ucFirst = (str: string) =>
-    !str ? str : str[0].toUpperCase() + str.slice(1);
+  const getFirstCapital = (str: string) => str[0]?.toUpperCase() + str.slice(1);
 
   return (
     <article
-      className={`${className}__places-card place-card`}
-      style={{ width: '260px', marginLeft: '8px', marginBottom: '24px' }}
+      className={`${className}__card place-card`}
       onMouseOver={() => {
-        onMouseOver && onMouseOver(id);
+        onMouseOver?.(id);
       }}
       onMouseLeave={() => {
-        onMouseLeave && onMouseLeave(0);
+        onMouseLeave?.(0);
       }}
     >
       {isPremium && (
@@ -102,7 +100,7 @@ function ApartmentCard({
         <h2 className="place-card__name">
           <Link to={generatePath(AppRoute.Room, { id: `${id}` })}>{title}</Link>
         </h2>
-        <p className="place-card__type">{ucFirst(type)}</p>
+        <p className="place-card__type">{getFirstCapital(type)}</p>
       </div>
     </article>
   );

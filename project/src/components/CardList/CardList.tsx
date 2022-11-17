@@ -22,7 +22,7 @@ function CardList({ roomOffers, page, onMouseOver }: CardListProps) {
   const {className, card} = propertiesPage[page];
 
   return (
-    <div className={`${className}__places-list places__list`} style = {{display:'flex', flexWrap:'wrap'}}>
+    <div className={`${className}__places-list`} >
       {roomOffers.map((roomOffer) => (
         <ApartmentCard
           card={card}
