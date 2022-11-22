@@ -45,7 +45,7 @@ function Map({ className, city, points, activeCard }: MapProps) {
           .addTo(map);
       });
     }
-  }, [map, points, activeCard]);
+  }, [map, points, activeCard, city]);
 
   return (
     <section className={`${className}__map map`}>

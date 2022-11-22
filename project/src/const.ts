@@ -41,6 +41,22 @@ enum iconAnchor {
   Height = 40,
 }
 
+enum CityName {
+  Paris = 'Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf',
+}
+
+enum SortTypes {
+  Popular = 'Popular',
+  Low = 'Price: low to high',
+  High = ' Price: high to low',
+  Top = 'Top rated first',
+}
+
 const MAX_RATING = 5;
 
 const REVIEW_MIN_LENGTH = 50;
@@ -49,4 +65,4 @@ const REVIEW_MAX_LENGTH = 300;
 
 const MAX_COUNT_IMAGES = 6;
 
-export {REVIEW_MIN_LENGTH, MAX_RATING, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};
+export {REVIEW_MIN_LENGTH, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};

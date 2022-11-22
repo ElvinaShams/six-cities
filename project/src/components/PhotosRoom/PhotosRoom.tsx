@@ -9,7 +9,7 @@ function PhotosRoom({ roomOffer }: PhotosRoomProps) {
   const { images } = roomOffer;
 
   const renderImage = images.slice(0, MAX_COUNT_IMAGES).map((image: string) => (
-    <div className="property__image-wrapper">
+    <div className="property__image-wrapper" key={image}>
       <img className="property__image" src={image} alt="Photo studio" />
     </div>
   ));
