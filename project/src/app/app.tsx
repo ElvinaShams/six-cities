@@ -10,18 +10,17 @@ import { RoomOffer } from '../types/room-offer';
 import { Review } from '../types/review';
 
 type AppProps = {
-  roomOffers: RoomOffer[],
   reviews: Review[],
 };
 
-function App({ roomOffers, reviews }: AppProps): JSX.Element {
+function App({ reviews }: AppProps): JSX.Element {
   return (
     <Routes>
-      <Route path={AppRoute.Main} element={<Main roomOffers={roomOffers} />} />
+      <Route path={AppRoute.Main} element={<Main />} />
 
       <Route path={AppRoute.SignIn} element={<Login />} />
 
-      <Route
+      {/* <Route
         path={AppRoute.Favorites}
         element={
           <PrivateRoute redirectTo={AppRoute.Main}>
@@ -32,7 +31,7 @@ function App({ roomOffers, reviews }: AppProps): JSX.Element {
       <Route
         path={AppRoute.Room}
         element={<Property reviews={reviews} roomOffers={roomOffers} />}
-      />
+      /> */}
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

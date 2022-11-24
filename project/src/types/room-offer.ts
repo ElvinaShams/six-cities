@@ -1,12 +1,7 @@
+import { City, Host, Location } from "./cities";
+
 export type RoomOffer = {
-  city: {
-    name: string,
-    location: {
-      latitude: number,
-      longitude: number,
-      zoom: number,
-    }
-  },
+  city: City,
   previewImage: string,
   images: string[],
   title: string,
@@ -18,17 +13,8 @@ export type RoomOffer = {
   maxAdults: number,
   price: number,
   goods: string[],
-  host: {
-    id: number,
-    name: string,
-    isPro: boolean,
-    avatarUrl: string,
-  },
+  host: Host,
   description: string,
-  location: {
-    latitude: number,
-    longitude: number,
-    zoom: number,
-  },
+  location: Location,
   id: number,
 };

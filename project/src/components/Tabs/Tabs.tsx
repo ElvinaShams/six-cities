@@ -12,7 +12,7 @@ function Tabs({ chooseName, onChangeCity }: TabsProps): JSX.Element {
     <li className="locations__item" key={city}>
       <Link
         className={cn('locations__item-link', {
-          'tabs__item tabs__item--active': city === chooseName,
+          'tabs__item tabs__item--active': city === chooseName || null,
         })}
         to={AppRoute.Main}
         onClick={() => onChangeCity(city)}

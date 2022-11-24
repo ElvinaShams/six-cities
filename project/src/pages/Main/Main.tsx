@@ -2,62 +2,70 @@ import { CardList } from '../../components/CardList';
 import { Tabs } from '../../components/Tabs';
 import { Map } from '../../components/Map';
 import { Sort } from '../../components/Sort';
-import { RoomOffer } from '../../types/room-offer';
 import { Layout } from '../../components/Layout';
 import React, { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CITY } from '../../mocks/cities';
 import { changeCity } from '../../store/action';
+import { SortTypes } from '../../const';
+import { RoomOffer } from '../../types/room-offer';
+import { sortOffers } from '../../util';
 
-type MainProps = {
-  roomOffers: RoomOffer[],
-};
-
-function Main({ roomOffers }: MainProps): JSX.Element {
+function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<number | null>(null);
-
-  const handleMouseOver = (id: number | null) => setActiveCard(id);
-
-  const points = roomOffers.map((roomOffer) => ({
-    id: roomOffer.id,
-    latitude: roomOffer.location.latitude,
-    longitude: roomOffer.location.longitude,
-  }));
-
-  const currentCityName = useAppSelector((state) => state.city);
-  const sortType = useAppSelector((state) => state.sortType);
   const dispatch = useAppDispatch();
-  const onChangeCity = (name: string) => {
+  const currentCityName = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.roomOffers);
+  const sortType = useAppSelector((state) => state.sortType);
+  const filteredOffers = offers.filter(
+    (roomOffer) => roomOffer.city.name === currentCityName
+  );
+
+  const renderOffers = sortOffers(sortType, filteredOffers);
+  console.log(renderOffers);
+
+  const handleChangeCity = (name: string) => {
     dispatch(changeCity(name));
   };
 
-  const cityName =
-    CITY.find((item) => item.name === currentCityName) || CITY[0];
+  const handleMouseOver = (id: number | null) => setActiveCard(id);
+
+  const points = offers.map((offer) => ({
+    id: offer.id,
+    latitude: offer.location.latitude,
+    longitude: offer.location.longitude,
+  }));
+
+  // const renderSortType = Object.values(SortTypes).map((sort) => (sort === sortType))
+
   return (
     <>
       <div className="page page--gray page--main">
         <Layout>
           <main className="page__main page__main--index">
             <h1 className="visually-hidden">Cities</h1>
-            <Tabs chooseName={currentCityName} onChangeCity={onChangeCity} />
+            <Tabs
+              chooseName={currentCityName}
+              onChangeCity={handleChangeCity}
+            />
             <div className="cities">
               <div className="cities__places-container container">
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">
-                    {roomOffers.length} places to stay in {cityName.name}
+                    {offers.length} places to stay in {currentCityName}
                   </b>
                   <Sort />
                   <CardList
                     page="main"
-                    roomOffers={roomOffers}
+                    roomOffers={filteredOffers}
                     onMouseOver={handleMouseOver}
                   />
                 </section>
                 <div className="cities__right-section">
                   <Map
                     className="cities"
-                    city={cityName}
+                    city={filteredOffers[0].city}
                     points={points}
                     activeCard={activeCard}
                   />

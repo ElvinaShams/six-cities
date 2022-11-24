@@ -4,7 +4,6 @@ import {
   BrowserRouter
 } from "react-router-dom";
 import App from './app/app';
-import { roomOffers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
 import {Provider} from 'react-redux';
 import { store } from './store';
@@ -18,7 +17,7 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
     <Provider store={store}>
-    <App roomOffers={roomOffers} reviews={reviews}/>
+    <App reviews={reviews}/>
     </Provider>
   </React.StrictMode>
   </BrowserRouter>
