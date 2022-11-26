@@ -3,12 +3,9 @@ import { Tabs } from '../../components/Tabs';
 import { Map } from '../../components/Map';
 import { Sort } from '../../components/Sort';
 import { Layout } from '../../components/Layout';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { CITY } from '../../mocks/cities';
 import { changeCity } from '../../store/action';
-import { SortTypes } from '../../const';
-import { RoomOffer } from '../../types/room-offer';
 import { sortOffers } from '../../util';
 
 function Main(): JSX.Element {
@@ -21,8 +18,7 @@ function Main(): JSX.Element {
     (roomOffer) => roomOffer.city.name === currentCityName
   );
 
-  const renderOffers = sortOffers(sortType, filteredOffers);
-  console.log(renderOffers);
+  const sortOffersType = sortOffers(sortType, filteredOffers);
 
   const handleChangeCity = (name: string) => {
     dispatch(changeCity(name));
@@ -35,8 +31,6 @@ function Main(): JSX.Element {
     latitude: offer.location.latitude,
     longitude: offer.location.longitude,
   }));
-
-  // const renderSortType = Object.values(SortTypes).map((sort) => (sort === sortType))
 
   return (
     <>
@@ -58,14 +52,14 @@ function Main(): JSX.Element {
                   <Sort />
                   <CardList
                     page="main"
-                    roomOffers={filteredOffers}
+                    roomOffers={sortOffersType}
                     onMouseOver={handleMouseOver}
                   />
                 </section>
                 <div className="cities__right-section">
                   <Map
                     className="cities"
-                    city={filteredOffers[0].city}
+                    city={sortOffersType[0].city}
                     points={points}
                     activeCard={activeCard}
                   />

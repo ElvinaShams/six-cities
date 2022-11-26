@@ -50,7 +50,7 @@ function ApartmentCard({
   } = roomOffer;
   const { className, width, height, placeCardActive } = properties[card];
 
-  const ratingValue = getRating(rating);
+  const ratingValue = getRating(Math.round(rating));
 
   const getFirstCapital = (str: string) => str[0]?.toUpperCase() + str.slice(1);
 

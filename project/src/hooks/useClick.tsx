@@ -7,7 +7,7 @@ const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
   handler: (event: Event) => void,
 ) => {
   useEffect(() => {
-    let maybeHandler = (event: Event) => {
+   const listener = (event: Event) => {
       const domNode = ref.current;
 
       if (domNode && !domNode.contains(event.target as Node)) {
@@ -15,12 +15,12 @@ const useOnClickOutside = <T extends HTMLElement = HTMLElement>(
       }
     };
 
-    document.addEventListener('mousedown', maybeHandler);
-    document.addEventListener('touchstart', maybeHandler);
+    document.addEventListener('mousedown', listener);
+    document.addEventListener('touchstart', listener);
 
     return () => {
-      document.removeEventListener('mousedown', maybeHandler);
-      document.removeEventListener('touchstart', maybeHandler);
+      document.removeEventListener('mousedown', listener);
+      document.removeEventListener('touchstart', listener);
     };
   });
   return ref;

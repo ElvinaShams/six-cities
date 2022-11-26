@@ -9,7 +9,7 @@ function ReviewItem({ review }: ReviewItemProps) {
   const { rating, comment, date } = review;
   const { avatarUrl, name } = review.user;
 
-  const ratingValue = getRating(rating);
+  const ratingValue = getRating(Math.round(rating));
 
   return (
     <li className="reviews__item">

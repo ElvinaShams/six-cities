@@ -1,11 +1,10 @@
-import React, { useRef, useState, KeyboardEvent } from 'react';
+import { useRef, useState } from 'react';
 import { SortTypes } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSortType } from '../../store/action';
 import cn from 'classnames';
 import { useOnClickOutside } from '../../hooks/useClick';
-
-type Event = KeyboardEvent<HTMLImageElement>;
+import { useKeyPress } from '../../hooks/useKey';
 
 function Sort() {
   const dispatch = useAppDispatch();
@@ -18,23 +17,8 @@ function Sort() {
     setOpen(false);
   };
 
-  const onDocumentKeyDown = (event: Event) => {
-    if (event.key === 'Escape') {
-      handleClickInside();
-    }
-  };
-
-  const openSortList = () => {
-    setOpen(!open);
-    document.addEventListener('keydown', onDocumentKeyDown);
-  };
-
-  const handleClickInside = () => {
-    setOpen(false);
-    document.removeEventListener('keydown', onDocumentKeyDown);
-  };
-
-  let handelClickOutside = useOnClickOutside(sortRef, handleClickInside);
+  useKeyPress(() => setOpen(!open));
+  useOnClickOutside(sortRef, () => setOpen(!open));
 
   const renderSortType = Object.values(SortTypes).map((sort) => (
     <li
@@ -50,19 +34,21 @@ function Sort() {
 
   return (
     <form className="places__sorting" action="#" method="get">
-      <div ref={handelClickOutside}>
+      <div ref={sortRef}>
         <span className="places__sorting-caption">Sort by&nbsp;</span>
-        <span className="places__sorting-type" onClick={openSortList}>
+        <span className="places__sorting-type" onClick={() => setOpen(!open)}>
           {sortType}
           <svg className="places__sorting-arrow" width="7" height="4">
             <use xlinkHref="#icon-arrow-select"></use>
           </svg>
         </span>
-        {open && (
-          <ul className="places__options places__options--custom places__options--opened">
-            {renderSortType}
-          </ul>
-        )}
+        <ul
+          className={cn('places__options places__options--custom', {
+            'places__options--opened': open,
+          })}
+        >
+          {renderSortType}
+        </ul>
       </div>
     </form>
   );
