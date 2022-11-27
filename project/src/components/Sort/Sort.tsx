@@ -1,27 +1,55 @@
+import { useRef, useState } from 'react';
+import { SortTypes } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setSortType } from '../../store/action';
+import cn from 'classnames';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import { useEscapePress } from '../../hooks/useEscapePress';
+
 function Sort() {
+  const dispatch = useAppDispatch();
+  const sortType = useAppSelector((state) => state.sortType);
+  const [open, setOpen] = useState(false);
+  const sortRef = useRef<HTMLDivElement>(null);
+
+  const onClickSortItem = (sortType: SortTypes) => {
+    dispatch(setSortType(sortType));
+    setOpen(false);
+  };
+
+  useEscapePress(() => setOpen(false));
+  useOnClickOutside(sortRef, () => setOpen(false));
+
+  const renderSortType = Object.values(SortTypes).map((sort) => (
+    <li
+      className={cn('places__option', {
+        'places__option--active': sort === sortType,
+      })}
+      key={sort}
+      onClick={() => onClickSortItem(sort)}
+    >
+      {sort}
+    </li>
+  ));
+
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">Sort by</span>
-      <span className="places__sorting-type" tabIndex={0}>
-        Popular
-        <svg className="places__sorting-arrow" width="7" height="4">
-          <use xlinkHref="#icon-arrow-select"></use>
-        </svg>
-      </span>
-      <ul className="places__options places__options--custom places__options--opened">
-        <li className="places__option places__option--active" tabIndex={0}>
-          Popular
-        </li>
-        <li className="places__option" tabIndex={0}>
-          Price: low to high
-        </li>
-        <li className="places__option" tabIndex={0}>
-          Price: high to low
-        </li>
-        <li className="places__option" tabIndex={0}>
-          Top rated first
-        </li>
-      </ul>
+      <div ref={sortRef}>
+        <span className="places__sorting-caption">Sort by&nbsp;</span>
+        <span className="places__sorting-type" onClick={() => setOpen(!open)}>
+          {sortType}
+          <svg className="places__sorting-arrow" width="7" height="4">
+            <use xlinkHref="#icon-arrow-select"></use>
+          </svg>
+        </span>
+        <ul
+          className={cn('places__options places__options--custom', {
+            'places__options--opened': open,
+          })}
+        >
+          {renderSortType}
+        </ul>
+      </div>
     </form>
   );
 }

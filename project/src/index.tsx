@@ -4,9 +4,9 @@ import {
   BrowserRouter
 } from "react-router-dom";
 import App from './app/app';
-import { CITY } from './mocks/cities';
-import { roomOffers } from './mocks/offers';
 import { reviews } from './mocks/reviews';
+import {Provider} from 'react-redux';
+import { store } from './store';
 
 
 const root = ReactDOM.createRoot(
@@ -16,7 +16,9 @@ const root = ReactDOM.createRoot(
 root.render(
   <BrowserRouter>
     <React.StrictMode>
-    <App roomOffers={roomOffers} reviews={reviews} city={CITY}/>
+    <Provider store={store}>
+    <App reviews={reviews}/>
+    </Provider>
   </React.StrictMode>
   </BrowserRouter>
 

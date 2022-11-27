@@ -2,7 +2,7 @@ import { Icon, Marker } from 'leaflet';
 import { useRef, useEffect } from 'react';
 import { iconAnchor, IconSize, MapIconUrl } from '../../const';
 import { useMap } from '../../hooks';
-import { City, Points } from '../../types/map';
+import { City, Points } from '../../types/cities';
 import 'leaflet/dist/leaflet.css';
 
 type MapProps = {
@@ -45,7 +45,7 @@ function Map({ className, city, points, activeCard }: MapProps) {
           .addTo(map);
       });
     }
-  }, [map, points, activeCard]);
+  }, [map, points, activeCard, city]);
 
   return (
     <section className={`${className}__map map`}>

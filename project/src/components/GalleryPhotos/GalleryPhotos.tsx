@@ -7,7 +7,7 @@ type GalleryPhotosProps = {
 
 function GalleryPhotos({ roomOffers }: GalleryPhotosProps) {
   const renderImages = roomOffers.map((roomOffer) => (
-    <PhotosRoom roomOffer={roomOffer} />
+    <PhotosRoom roomOffer={roomOffer} key={roomOffer.id} />
   ));
 
   return <div className="property__gallery">{renderImages}</div>;

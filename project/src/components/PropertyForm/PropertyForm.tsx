@@ -32,6 +32,7 @@ function PropertyForm(): JSX.Element {
             handleClick={handleClick}
             ratingValue={ratingValue}
             ratingTitle={ratingTitle}
+            key={ratingValue}
           />
         ))}
       </div>

@@ -4,22 +4,23 @@ import { Layout } from '../../components/Layout';
 import { Map } from '../../components/Map';
 import { PropertyForm } from '../../components/PropertyForm';
 import { ReviewsList } from '../../components/ReviewsList';
-import { City } from '../../types/map';
+import { CITY } from '../../mocks/cities';
 import { Review } from '../../types/review';
 import { RoomOffer } from '../../types/room-offer';
 
 type PropertyProps = {
   reviews: Review[],
   roomOffers: RoomOffer[],
-  city: City,
 };
 
-function Property({ reviews, roomOffers, city }: PropertyProps) {
+function Property({ reviews, roomOffers }: PropertyProps) {
   const points = roomOffers.map((roomOffer) => ({
     id: roomOffer.id,
     latitude: roomOffer.location.latitude,
     longitude: roomOffer.location.longitude,
   }));
+
+  const city = CITY[0];
 
   return (
     <div className="page">

@@ -18,7 +18,7 @@ const propertiesPage = {
   }
 } as const
 
-function CardList({ roomOffers, page, onMouseOver }: CardListProps) {
+function CardList({ roomOffers, page, onMouseOver}: CardListProps) {
   const {className, card} = propertiesPage[page];
 
   return (

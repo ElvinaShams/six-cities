@@ -1,7 +1,7 @@
 .page_404 {
   padding:40px 0;
   background:#fff;
-  font-family: 'Arvo', serif;
+  font-family: rubik,arial,sans-serif;;
 }
 
 .page_404 img {
@@ -28,13 +28,19 @@
   .link_404 {
     color: #fff!important;
     padding: 10px 20px;
-    background: #39ac31;
+    background:#4481c3;
     margin: 20px 0;
+    font-size: 19px;
     display: inline-block;
+    font-style: oblique;
   }
+
+  .link_404:hover {
+    text-shadow: 1px 0 0, 0.5px 0 0, -1px 0 0;}
 
   .content_box_404 {
     margin-top:-50px;
+    transform: skew(-15deg);
   }
 
   .text_center {
