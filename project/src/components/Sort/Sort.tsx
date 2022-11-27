@@ -3,8 +3,8 @@ import { SortTypes } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { setSortType } from '../../store/action';
 import cn from 'classnames';
-import { useOnClickOutside } from '../../hooks/useClick';
-import { useKeyPress } from '../../hooks/useKey';
+import { useOnClickOutside } from '../../hooks/useOnClickOutside';
+import { useEscapePress } from '../../hooks/useEscapePress';
 
 function Sort() {
   const dispatch = useAppDispatch();
@@ -17,8 +17,8 @@ function Sort() {
     setOpen(false);
   };
 
-  useKeyPress(() => setOpen(!open));
-  useOnClickOutside(sortRef, () => setOpen(!open));
+  useEscapePress(() => setOpen(false));
+  useOnClickOutside(sortRef, () => setOpen(false));
 
   const renderSortType = Object.values(SortTypes).map((sort) => (
     <li

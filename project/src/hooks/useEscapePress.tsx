@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 
-const useKeyPress = (handler: () => void) => {
+const useEscapePress = (handler: () => void) => {
   useEffect(() => {
     const downHandler = (event: KeyboardEvent) => {
       if (event.code === 'Escape') {
@@ -16,4 +16,4 @@ const useKeyPress = (handler: () => void) => {
   });
 };
 
-export { useKeyPress };
+export { useEscapePress };
