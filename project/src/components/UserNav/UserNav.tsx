@@ -1,8 +1,14 @@
 import { Link } from 'react-router-dom';
 import { AppRoute } from '../../const';
+import { useAppSelector } from '../../hooks';
+import { State } from '../../types/state';
+
+const getUserData = (state: State) => state.userData.user;
 
 function UserNav() {
   const isAuth = true;
+
+  const user = useAppSelector(getUserData);
 
   return (
     <nav className="header__nav">
@@ -16,7 +22,7 @@ function UserNav() {
               >
                 <div className="header__avatar-wrapper user__avatar-wrapper"></div>
                 <span className="header__user-name user__name">
-                  Oliver.conner@gmail.com
+                  {user?.email}
                 </span>
                 <span className="header__favorite-count">3</span>
               </Link>
