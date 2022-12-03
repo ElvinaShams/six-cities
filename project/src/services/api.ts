@@ -1,10 +1,8 @@
 import axios, {AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse} from 'axios';
 import {getToken} from './token';
 import {StatusCodes} from 'http-status-codes';
-import { processErrorHandle } from './handle-error';
-
-const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
-const REQUEST_TIMEOUT = 5000;
+import {toast} from 'react-toastify';
+import { BACKEND_URL, REQUEST_TIMEOUT } from '../const';
 
 const StatusCodeMapping: Record<number, boolean> = {
   [StatusCodes.BAD_REQUEST]: true,
@@ -34,7 +32,7 @@ export const createAPI = (): AxiosInstance => {
     (response) => response,
     (error: AxiosError<{error: string}>) => {
       if (error.response && shouldDisplayError(error.response)) {
-        processErrorHandle(error.response.data.error);
+        toast.warn(error.response.data.error);
       }
 
       throw error;

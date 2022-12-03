@@ -3,19 +3,20 @@ import { AuthStatus, SortTypes } from "../const";
 import { CITY } from "../mocks/cities";
 import { RoomOffer } from "../types/room-offer";
 import { UserData } from "../types/user-data";
-import { changeCity, getAuthStatus, loadRoomOffers, setError, setOffersDataLoadingStatus, setSortType, setUserData } from "./action";
+import { changeCity, getAuthStatus, loadRoomOffers, setOffersDataLoadingStatus, setSortType, setUserData, setUserEmail } from "./action";
 
 type InitialState = {
   city: string,
   roomOffers: RoomOffer[],
   sortType: SortTypes,
   authStatus: AuthStatus,
-  error: string | null,
   isOffersDataLoading: boolean,
   userData: {
     authStatus: AuthStatus;
-    user: UserData | null;
-  };
+    user: UserData | null,
+    email: string | null,
+  },
+
 }
 
 const initialState:InitialState = {
@@ -23,12 +24,13 @@ const initialState:InitialState = {
  roomOffers: [],
  sortType: SortTypes.Popular,
  authStatus: AuthStatus.noAuth,
- error: null,
  isOffersDataLoading: false,
  userData: {
   authStatus: AuthStatus.noAuth,
   user: null,
-}
+  email: '',
+},
+
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -52,7 +54,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(setUserData, (state, action) => {
       state.userData.user = action.payload;
     })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
+    .addCase(setUserEmail, (state, action) => {
+      state.userData.email = action.payload;
     });
 });

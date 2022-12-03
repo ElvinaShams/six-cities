@@ -7,20 +7,20 @@ import { loginAction } from '../../store/api-action/api-action-login';
 import { AuthData } from '../../types/auth-data';
 
 function Login() {
-  const dispatch = useAppDispatch();
-  const navigate = useNavigate();
   const [loginField, setLoginField] = useState('');
   const [passwordField, setPasswordField] = useState('');
 
-  const handleLogin = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setLoginField(e.target.value);
-  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPasswordField(e.target.value);
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const onSubmit = (authData: AuthData) => {
     dispatch(loginAction(authData));
   };
 
+  const handleLogin = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setLoginField(e.target.value);
+  const handlePassword = (e: React.ChangeEvent<HTMLInputElement>) =>
+    setPasswordField(e.target.value);
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
@@ -29,6 +29,7 @@ function Login() {
         login: loginField,
         password: passwordField,
       });
+      navigate(AppRoute.Main);
     }
   };
 
@@ -64,13 +65,13 @@ function Login() {
                     type="password"
                     name="password"
                     placeholder="Password"
+                    pattern="[a-z]+[A-Z]+[0-9]+|[a-z]+[0-9]+[A-Z]+|[A-Z]+[a-z]+[0-9]+|[A-Z]+[0-9]+[a-z]+|[0-9]+[a-z]+[A-Z]+|[0-9]+[A-Z]+[a-z]"
                     required={false}
                   />
                 </div>
                 <button
                   className="login__submit form__submit button"
                   type="submit"
-                  onClick={() => navigate(AppRoute.Room)}
                 >
                   Sign in
                 </button>
@@ -78,7 +79,11 @@ function Login() {
             </section>
             <section className="locations locations--login locations--current">
               <div className="locations__item">
-                <Link className="locations__item-link" to={'#'}>
+                <Link
+                  className="locations__item-link"
+                  type="button"
+                  to={AppRoute.Room}
+                >
                   <span>Amsterdam</span>
                 </Link>
               </div>

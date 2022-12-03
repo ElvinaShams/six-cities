@@ -7,9 +7,10 @@ import App from './app/app';
 import { reviews } from './mocks/reviews';
 import {Provider} from 'react-redux';
 import { store } from './store';
-import { ErrorMessage } from './components/ErrorMessage';
 import { checkAuth } from './store/api-action/api-action-auth';
 import { fetchOffersList } from './store/api-action/api-action-offers';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 store.dispatch(fetchOffersList());
 store.dispatch(checkAuth());
@@ -22,7 +23,7 @@ root.render(
   <BrowserRouter>
     <React.StrictMode>
     <Provider store={store}>
-    <ErrorMessage />
+    <ToastContainer />
     <App reviews={reviews}/>
     </Provider>
   </React.StrictMode>

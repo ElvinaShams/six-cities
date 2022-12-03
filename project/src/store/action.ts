@@ -18,15 +18,15 @@ const loadRoomOffers = createAction('roomOffers/loadRoomOffers',(roomOffers:Room
 })
 );
 
-const getAuthStatus = createAction('server/AuthStatus',(AuthStatus:AuthStatus) => ({
-  payload: AuthStatus,
+const getAuthStatus = createAction('server/AuthStatus',(authStatus:AuthStatus) => ({
+  payload: authStatus,
 })
 );
 
 const setUserData = createAction<UserData | null>('server/setUserData');
 
+const setUserEmail = createAction<string | null>('server/setUserEmail');
+
 const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
 
-const setError = createAction<string | null>('roomOffers/setError');
-
-export {changeCity, setSortType, loadRoomOffers, setUserData, setError, getAuthStatus, setOffersDataLoadingStatus};
+export {changeCity, setSortType, setUserEmail, loadRoomOffers, setUserData,getAuthStatus, setOffersDataLoadingStatus};

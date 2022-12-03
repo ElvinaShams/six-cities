@@ -21,7 +21,7 @@ function App({ reviews }: AppProps): JSX.Element {
   );
   const roomOffers = useAppSelector((state) => state.roomOffers);
 
-  if (authorizationStatus === AuthStatus.noAuth || isOffersDataLoading) {
+  if (authorizationStatus === AuthStatus.unknown || isOffersDataLoading) {
     return <Spinner />;
   }
 

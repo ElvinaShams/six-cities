@@ -79,5 +79,7 @@ const MAX_COUNT_IMAGES = 6;
 
 const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 
-const TIMEOUT_SHOW_ERROR = 2000;
-export {REVIEW_MIN_LENGTH, TIMEOUT_SHOW_ERROR, APIRoute, AuthStatus, AUTH_TOKEN_KEY_NAME, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};
+const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
+const REQUEST_TIMEOUT = 5000;
+
+export {REVIEW_MIN_LENGTH, APIRoute, AuthStatus, BACKEND_URL, REQUEST_TIMEOUT, AUTH_TOKEN_KEY_NAME, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};
