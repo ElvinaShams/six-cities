@@ -1,7 +1,7 @@
 import { AppRoute, AuthStatus } from '../const';
 import { Route, Routes } from 'react-router-dom';
 import { Main } from '../pages/Main';
-import { Login } from '../pages/Login';
+import { LoginPage } from '../pages/LoginPage';
 import { Favorites } from '../pages/Favorites';
 import { Property } from '../pages/Property';
 import { NotFound } from '../pages/NotFound';
@@ -29,7 +29,7 @@ function App({ reviews }: AppProps): JSX.Element {
     <Routes>
       <Route path={AppRoute.Main} element={<Main />} />
 
-      <Route path={AppRoute.SignIn} element={<Login />} />
+      <Route path={AppRoute.SignIn} element={<LoginPage />} />
 
       <Route
         path={AppRoute.Favorites}
@@ -44,7 +44,7 @@ function App({ reviews }: AppProps): JSX.Element {
       />
       <Route
         path={AppRoute.Room}
-        element={<Property reviews={reviews} roomOffers={roomOffers} />}
+        element={<Property roomOffers={roomOffers} />}
       />
       <Route path="*" element={<NotFound />} />
     </Routes>

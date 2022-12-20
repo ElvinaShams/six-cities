@@ -1,5 +1,6 @@
 import {createAction} from '@reduxjs/toolkit';
-import { AuthStatus, SortTypes } from '../const';
+import { AppRoute, AuthStatus, SortTypes } from '../const';
+import { Review } from '../types/review';
 import { RoomOffer } from '../types/room-offer';
 import { UserData } from '../types/user-data';
 
@@ -23,10 +24,19 @@ const getAuthStatus = createAction('server/AuthStatus',(authStatus:AuthStatus) =
 })
 );
 
+const setNearbyOffer = createAction('review/NearbyOffer',(nearbyOffers:RoomOffer[]) => ({
+  payload: nearbyOffers,
+})
+);
+
+const loadComments = createAction('review/comments',(comments:Review[]) => ({
+  payload: comments,
+})
+);
+
 const setUserData = createAction<UserData | null>('server/setUserData');
 
-const setUserEmail = createAction<string | null>('server/setUserEmail');
-
 const setOffersDataLoadingStatus = createAction<boolean>('data/setOffersDataLoadingStatus');
+const redirectToRoute = createAction<AppRoute>('page/redirectToRoute');
 
-export {changeCity, setSortType, setUserEmail, loadRoomOffers, setUserData,getAuthStatus, setOffersDataLoadingStatus};
+export {changeCity, setSortType, redirectToRoute, setNearbyOffer, loadRoomOffers, loadComments, setUserData,getAuthStatus, setOffersDataLoadingStatus};

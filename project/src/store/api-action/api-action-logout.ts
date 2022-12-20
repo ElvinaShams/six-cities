@@ -1,22 +1,27 @@
-import { State } from './../../types/state';
+import { State } from '../../types/state';
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { AxiosInstance } from "axios";
 import { AppDispatch } from "../../types/state";
 import { APIRoute, AuthStatus } from '../../const';
-import { getAuthStatus } from '../action';
+import { getAuthStatus, setUserData } from '../action';
 import { dropToken } from '../../services/token';
 
-const Logout = createAsyncThunk<void, undefined, {
+const logout = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'user/logout',
   async (_arg, {dispatch, extra: api}) => {
-    await api.delete(APIRoute.Logout);
-    dropToken();
-    dispatch(getAuthStatus(AuthStatus.noAuth));
+    try{
+      await api.delete(APIRoute.Logout);
+      dropToken();
+      dispatch(getAuthStatus(AuthStatus.noAuth));
+      dispatch(setUserData(null));
+    } catch(e) {
+      throw e;
+    }
   },
 );
 
-export { Logout };
+export { logout };

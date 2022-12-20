@@ -1,22 +1,20 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { MouseEvent } from 'react';
+import { Link } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setUserData } from '../../store/action';
-import { Logout } from '../../store/api-action/api-action-logaut';
-import { getAuthorizationStatus, getUserEmail } from '../../store/selectors';
+import { logout } from '../../store/api-action/api-action-logout';
+import { getAuthorizationStatus, getUserData } from '../../store/selectors';
 
 function UserNav() {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  const userData = useAppSelector(getUserEmail);
+  const userData = useAppSelector(getUserData);
   const isAuth: boolean =
     useAppSelector(getAuthorizationStatus) === AuthStatus.auth;
 
-  const handleSignClick = () => {
-    dispatch(Logout());
-    dispatch(setUserData(null));
-    navigate(AppRoute.Main);
+  const handleSignOutClick = (evt: MouseEvent) => {
+    evt.preventDefault();
+    dispatch(logout());
   };
 
   return (
@@ -29,19 +27,28 @@ function UserNav() {
                 className="header__nav-link header__nav-link--profile"
                 to={AppRoute.Favorites}
               >
-                <div className="header__avatar-wrapper user__avatar-wrapper"></div>
-                <span className="header__user-name user__name">{userData}</span>
+                <div
+                  className="header__avatar-wrapper"
+                  style={{
+                    backgroundSize: '100%',
+                    backgroundRepeat: ' no-repeat',
+                    backgroundImage: `url(${userData?.avatarUrl})`,
+                  }}
+                ></div>
+                <span className="header__user-name user__name">
+                  {userData?.email}
+                </span>
                 <span className="header__favorite-count">3</span>
               </Link>
             </li>
             <li className="header__nav-item">
-              <Link
+              <a
                 className="header__nav-link"
-                to={AppRoute.Main}
-                onClick={handleSignClick}
+                href="/#"
+                onClick={handleSignOutClick}
               >
                 <span className="header__signout">Sign out</span>
-              </Link>
+              </a>
             </li>
           </>
         ) : (

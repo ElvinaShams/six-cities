@@ -1,19 +1,38 @@
+// import { useEffect } from 'react';
+// import { useParams } from 'react-router-dom';
 import { CardList } from '../../components/CardList';
 import { GalleryPhotos } from '../../components/GalleryPhotos';
 import { Layout } from '../../components/Layout';
 import { Map } from '../../components/Map';
 import { PropertyForm } from '../../components/PropertyForm';
 import { ReviewsList } from '../../components/ReviewsList';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { CITY } from '../../mocks/cities';
+import { store } from '../../store';
+// import {
+//   fetchComments,
+//   fetchOffer,
+// } from '../../store/api-action/api-action-offers';
 import { Review } from '../../types/review';
 import { RoomOffer } from '../../types/room-offer';
 
 type PropertyProps = {
-  reviews: Review[],
   roomOffers: RoomOffer[],
 };
 
-function Property({ reviews, roomOffers }: PropertyProps) {
+function Property({ roomOffers }: PropertyProps) {
+  // const dispatch = useAppDispatch();
+  // const offers = useAppSelector((state) => state.nearbyOffers);
+
+  // const { id } = useParams();
+
+  // useEffect(() => {
+  //   // store.dispatch(fetchComments());
+  //   store.dispatch(fetchOffer(Number(id)));
+  // }, []);
+
+  // const offer = offers.find((item)=> item.id = )
+
   const points = roomOffers.map((roomOffer) => ({
     id: roomOffer.id,
     latitude: roomOffer.location.latitude,
@@ -122,11 +141,11 @@ function Property({ reviews, roomOffers }: PropertyProps) {
                   </div>
                 </div>
                 <section className="property__reviews reviews">
-                  <h2 className="reviews__title">
+                  {/* <h2 className="reviews__title">
                     Reviews &middot;{' '}
                     <span className="reviews__amount">{reviews.length}</span>
                   </h2>
-                  <ReviewsList reviews={reviews} />
+                  <ReviewsList reviews={reviews} /> */}
                   <PropertyForm />
                 </section>
               </div>
