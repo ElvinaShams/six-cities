@@ -1,8 +1,21 @@
+import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { logout } from '../../store/api-action/api-action-logout';
+import { getAuthorizationStatus, getUserData } from '../../store/selectors';
 
 function UserNav() {
-  const isAuth = true;
+  const dispatch = useAppDispatch();
+
+  const userData = useAppSelector(getUserData);
+  const isAuth: boolean =
+    useAppSelector(getAuthorizationStatus) === AuthStatus.auth;
+
+  const handleSignOutClick = (evt: MouseEvent) => {
+    evt.preventDefault();
+    dispatch(logout());
+  };
 
   return (
     <nav className="header__nav">
@@ -14,17 +27,28 @@ function UserNav() {
                 className="header__nav-link header__nav-link--profile"
                 to={AppRoute.Favorites}
               >
-                <div className="header__avatar-wrapper user__avatar-wrapper"></div>
+                <div
+                  className="header__avatar-wrapper"
+                  style={{
+                    backgroundSize: '100%',
+                    backgroundRepeat: ' no-repeat',
+                    backgroundImage: `url(${userData?.avatarUrl})`,
+                  }}
+                ></div>
                 <span className="header__user-name user__name">
-                  Oliver.conner@gmail.com
+                  {userData?.email}
                 </span>
                 <span className="header__favorite-count">3</span>
               </Link>
             </li>
             <li className="header__nav-item">
-              <Link className="header__nav-link" to={AppRoute.SignIn}>
+              <a
+                className="header__nav-link"
+                href="/#"
+                onClick={handleSignOutClick}
+              >
                 <span className="header__signout">Sign out</span>
-              </Link>
+              </a>
             </li>
           </>
         ) : (

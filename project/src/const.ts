@@ -57,6 +57,19 @@ enum SortTypes {
   Top = 'Top rated first',
 }
 
+enum AuthStatus {
+  auth = 'AUTH',
+  noAuth = 'NO_AUTH',
+  unknown = 'UNKNOWN',
+}
+
+enum APIRoute {
+  Offers = '/hotels',
+  Login = '/login',
+  Logout = '/logout',
+  Comments = '/comments',
+}
+
 const MAX_RATING = 5;
 
 const REVIEW_MIN_LENGTH = 50;
@@ -65,4 +78,9 @@ const REVIEW_MAX_LENGTH = 300;
 
 const MAX_COUNT_IMAGES = 6;
 
-export {REVIEW_MIN_LENGTH, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};
+const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
+
+const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
+const REQUEST_TIMEOUT = 5000;
+
+export {REVIEW_MIN_LENGTH, APIRoute, AuthStatus, BACKEND_URL, REQUEST_TIMEOUT, AUTH_TOKEN_KEY_NAME, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};

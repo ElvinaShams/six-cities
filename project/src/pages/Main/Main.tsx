@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { changeCity } from '../../store/action';
 import { sortOffers } from '../../util';
+import { RoomOffer } from '../../types/room-offer';
 
 function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -18,8 +19,7 @@ function Main(): JSX.Element {
     (roomOffer) => roomOffer.city.name === currentCityName
   );
 
-  const sortOffersType = sortOffers(sortType, filteredOffers);
-
+  const sortOffersType: RoomOffer[] = sortOffers(sortType, filteredOffers);
   const handleChangeCity = (name: string) => {
     dispatch(changeCity(name));
   };
