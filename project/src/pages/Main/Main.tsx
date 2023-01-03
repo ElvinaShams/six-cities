@@ -5,16 +5,18 @@ import { Sort } from '../../components/Sort';
 import { Layout } from '../../components/Layout';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
 import { sortOffers } from '../../util';
 import { RoomOffer } from '../../types/room-offer';
+import { changeCity } from '../../store/app-process/app-process';
+import { getOffers } from '../../store/offers-data/selectors';
+import { getCity, getSortType } from '../../store/app-process/selectors';
 
 function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const dispatch = useAppDispatch();
-  const currentCityName = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.roomOffers);
-  const sortType = useAppSelector((state) => state.sortType);
+  const currentCityName = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
+  const sortType = useAppSelector(getSortType);
   const filteredOffers = offers.filter(
     (roomOffer) => roomOffer.city.name === currentCityName
   );

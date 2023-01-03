@@ -6,22 +6,20 @@ import { Favorites } from '../pages/Favorites';
 import { Property } from '../pages/Property';
 import { NotFound } from '../pages/NotFound';
 import { PrivateRoute } from '../components/PrivateRoute';
-import { Review } from '../types/review';
 import { useAppSelector } from '../hooks';
 import { Spinner } from '../components/Spinner';
+import { getAuthorizationStatus } from '../store/user-process/selectors';
+import {
+  getOffers,
+  getQuestionsDataLoadingStatus,
+} from '../store/offers-data/selectors';
 
-type AppProps = {
-  reviews: Review[],
-};
+function App(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const isOffersDataLoading = useAppSelector(getQuestionsDataLoadingStatus);
+  const roomOffers = useAppSelector(getOffers);
 
-function App({ reviews }: AppProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authStatus);
-  const isOffersDataLoading = useAppSelector(
-    (state) => state.isOffersDataLoading
-  );
-  const roomOffers = useAppSelector((state) => state.roomOffers);
-
-  if (authorizationStatus === AuthStatus.unknown || isOffersDataLoading) {
+  if (authorizationStatus === AuthStatus.Unknown || isOffersDataLoading) {
     return <Spinner />;
   }
 

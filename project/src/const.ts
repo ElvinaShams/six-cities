@@ -1,3 +1,5 @@
+import { City } from "./types/cities";
+
 export enum AppRoute {
   Main = '/',
   SignIn = '/login',
@@ -58,9 +60,9 @@ enum SortTypes {
 }
 
 enum AuthStatus {
-  auth = 'AUTH',
-  noAuth = 'NO_AUTH',
-  unknown = 'UNKNOWN',
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
 }
 
 enum APIRoute {
@@ -69,6 +71,64 @@ enum APIRoute {
   Logout = '/logout',
   Comments = '/comments',
 }
+
+enum NameSpace {
+  Offers = 'OFFERS',
+  User = 'USER',
+  App = 'APP',
+  Comments = 'COMMENTS',
+}
+
+export const cities: City[] = [
+  {
+    location: {
+      latitude: 48.864716,
+      longitude: 2.349014,
+      zoom: 10,
+    },
+    name: 'Paris',
+  },
+  {
+    location: {
+      latitude: 50.935173,
+      longitude: 6.953101,
+      zoom: 10,
+    },
+    name: 'Cologne',
+  },
+  {
+    location: {
+      latitude: 50.8505,
+      longitude: 4.3488,
+      zoom: 10,
+    },
+    name: 'Brussels',
+  },
+  {
+    location: {
+      latitude: 52.370216,
+      longitude: 4.895168,
+      zoom: 10,
+    },
+    name: 'Amsterdam',
+  },
+  {
+    location: {
+      latitude: 53.551086,
+      longitude: 9.993682,
+      zoom: 10,
+    },
+    name: 'Hamburg',
+  },
+  {
+    location: {
+      latitude: 51.233334,
+      longitude: 6.783333,
+      zoom: 10,
+    },
+    name: 'Dusseldorf',
+  },
+];
 
 const MAX_RATING = 5;
 
@@ -83,4 +143,4 @@ const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
 const REQUEST_TIMEOUT = 5000;
 
-export {REVIEW_MIN_LENGTH, APIRoute, AuthStatus, BACKEND_URL, REQUEST_TIMEOUT, AUTH_TOKEN_KEY_NAME, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};
+export {REVIEW_MIN_LENGTH, APIRoute, AuthStatus, NameSpace, BACKEND_URL, REQUEST_TIMEOUT, AUTH_TOKEN_KEY_NAME, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};

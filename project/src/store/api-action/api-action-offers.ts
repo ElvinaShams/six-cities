@@ -4,24 +4,21 @@ import { AxiosInstance } from "axios";
 import { AppDispatch } from "../../types/state";
 import { RoomOffer } from '../../types/room-offer';
 import { APIRoute } from '../../const';
-import { loadComments, loadRoomOffers, setOffersDataLoadingStatus } from '../action';
 import { Review } from '../../types/review';
 
-const fetchOffersList = createAsyncThunk<void, undefined, {
+const fetchOffersList = createAsyncThunk<RoomOffer[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
   'data/fetchOffersList ',
   async (_arg, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
     const {data} = await api.get<RoomOffer[]>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
-    dispatch(loadRoomOffers(data));
+    return data;
   },
 );
 
-const fetchComments = createAsyncThunk<void, undefined, {
+const fetchComments = createAsyncThunk<Review[], undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
@@ -29,7 +26,7 @@ const fetchComments = createAsyncThunk<void, undefined, {
   'data/fetchComments ',
   async (id, {dispatch, extra: api}) => {
     const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
-    dispatch(loadComments(data));
+    return data;
   },
 );
 
