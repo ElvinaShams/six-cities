@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { CardList } from '../../components/CardList';
 import { Tabs } from '../../components/Tabs';
 import { Map } from '../../components/Map';
@@ -8,8 +9,14 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import { sortOffers } from '../../util';
 import { RoomOffer } from '../../types/room-offer';
 import { changeCity } from '../../store/app-process/app-process';
-import { getOffers } from '../../store/offers-data/selectors';
+import { getOffers, getOffersStatus } from '../../store/offers-data/selectors';
 import { getCity, getSortType } from '../../store/app-process/selectors';
+import { fetchOffersList } from '../../store/api-action/api-action-offers';
+import { checkAuth } from '../../store/api-action/api-action-user';
+import { getAuthCheckedStatus } from '../../store/user-process/selectors';
+
+import { Spinner } from '../../components/Spinner';
+// import { ErrorMessage } from '../../components/ErrorMessage';
 
 function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -17,6 +24,22 @@ function Main(): JSX.Element {
   const currentCityName = useAppSelector(getCity);
   const offers = useAppSelector(getOffers);
   const sortType = useAppSelector(getSortType);
+
+  const OffersStatus = useAppSelector(getOffersStatus);
+
+  useEffect(() => {
+    dispatch(fetchOffersList());
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  if (!getAuthCheckedStatus || OffersStatus.isLoading) {
+    return <Spinner />;
+  }
+
+  // if (OffersStatus.isError) {
+  //   return <ErrorMessage />;
+  // }
+
   const filteredOffers = offers.filter(
     (roomOffer) => roomOffer.city.name === currentCityName
   );
@@ -49,7 +72,7 @@ function Main(): JSX.Element {
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">
-                    {offers.length} places to stay in {currentCityName}
+                    {filteredOffers.length} places to stay in {currentCityName}
                   </b>
                   <Sort />
                   <CardList

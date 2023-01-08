@@ -1,8 +1,9 @@
 import React, { FormEvent, useState } from 'react';
 import cn from 'classnames';
 import { useAppDispatch } from '../../hooks';
-import { loginAction } from '../../store/api-action/api-action-login';
+
 import styles from './Login.module.css';
+import { loginAction } from '../../store/api-action/api-action-user';
 
 const formField = {
   email: 'E-mail',

@@ -5,6 +5,7 @@ import { AppDispatch } from "../../types/state";
 import { RoomOffer } from '../../types/room-offer';
 import { APIRoute } from '../../const';
 import { Review } from '../../types/review';
+import { toast } from 'react-toastify';
 
 const fetchOffersList = createAsyncThunk<RoomOffer[], undefined, {
   dispatch: AppDispatch;
@@ -13,8 +14,31 @@ const fetchOffersList = createAsyncThunk<RoomOffer[], undefined, {
 }>(
   'data/fetchOffersList ',
   async (_arg, {dispatch, extra: api}) => {
-    const {data} = await api.get<RoomOffer[]>(APIRoute.Offers);
+    try {
+      const {data} = await api.get<RoomOffer[]>(APIRoute.Offers);
     return data;
+  } catch (e) {
+    toast.error('Please reload the page if you want to send a message again');
+    throw e;
+  }
+  },
+);
+
+const fetchOffer = createAsyncThunk<RoomOffer, undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchOffer ',
+  async (id, {dispatch, extra: api}) => {
+    try {
+      const {data} = await api.get(`${APIRoute.Offer}/${id}`);
+      return data;
+    } catch (e) {
+    toast.error('Please reload the page if you want to send a message again');
+    throw e;
+    }
+
   },
 );
 
@@ -30,4 +54,4 @@ const fetchComments = createAsyncThunk<Review[], undefined, {
   },
 );
 
-export { fetchOffersList, fetchComments };
+export { fetchOffersList, fetchComments, fetchOffer };

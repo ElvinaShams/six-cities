@@ -1,0 +1,14 @@
+.errorPage {
+  width: 100%;
+}
+
+.error {
+  display: block;
+  background-color: #FFBABA;
+  margin: 300px auto;
+  padding: 20px 20px;
+  color: #D8000C;
+  font-size: 19px;
+  font-style: oblique;
+  width: 700px;
+}

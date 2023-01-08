@@ -1,9 +1,10 @@
 import { UserData } from './../../types/user-data';
 import {createSlice} from '@reduxjs/toolkit';
 import { AuthStatus, NameSpace } from "../../const";
-import { checkAuth } from '../api-action/api-action-auth';
-import { loginAction } from '../api-action/api-action-login';
-import { logout } from '../api-action/api-action-logout';
+import { checkAuth } from '../api-action/api-action-user';
+import { loginAction } from '../api-action/api-action-user';
+import { logout } from '../api-action/api-action-user';
+
 
 type InitialState = {
   authorizationStatus: AuthStatus;
@@ -21,14 +22,14 @@ export const userProcess = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(checkAuth.fulfilled, (state) => {
+      .addCase(checkAuth.fulfilled, (state, action) => {
         state.authorizationStatus = AuthStatus.Auth;
         state.user=action.payload;
       })
       .addCase(checkAuth.rejected, (state) => {
         state.authorizationStatus = AuthStatus.NoAuth;
       })
-      .addCase(loginAction.fulfilled, (state) => {
+      .addCase(loginAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthStatus.Auth;
         state.user=action.payload;
       })

@@ -70,6 +70,7 @@ enum APIRoute {
   Login = '/login',
   Logout = '/logout',
   Comments = '/comments',
+  Offer = '/offer/:id',
 }
 
 enum NameSpace {
@@ -77,6 +78,13 @@ enum NameSpace {
   User = 'USER',
   App = 'APP',
   Comments = 'COMMENTS',
+}
+
+enum FetchStatus {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Failed = 'Failed',
 }
 
 export const cities: City[] = [
@@ -143,4 +151,4 @@ const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 const BACKEND_URL = 'https://11.react.pages.academy/six-cities-simple';
 const REQUEST_TIMEOUT = 5000;
 
-export {REVIEW_MIN_LENGTH, APIRoute, AuthStatus, NameSpace, BACKEND_URL, REQUEST_TIMEOUT, AUTH_TOKEN_KEY_NAME, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};
+export {REVIEW_MIN_LENGTH, APIRoute, AuthStatus, NameSpace, FetchStatus, BACKEND_URL, REQUEST_TIMEOUT, AUTH_TOKEN_KEY_NAME, MAX_RATING, CityName, SortTypes, REVIEW_MAX_LENGTH, RatingValue, LayerConfig, MapIconUrl, MAX_COUNT_IMAGES, IconSize, iconAnchor};

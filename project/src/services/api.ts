@@ -28,16 +28,16 @@ export const createAPI = (): AxiosInstance => {
       return config;
     },
   );
-  api.interceptors.response.use(
-    (response) => response,
-    (error: AxiosError<{error: string}>) => {
-      if (error.response && shouldDisplayError(error.response)) {
-        toast.warn(error.response.data.error);
-      }
+  // api.interceptors.response.use(
+  //   (response) => response,
+  //   (error: AxiosError<{error: string}>) => {
+  //     if (error.response && shouldDisplayError(error.response)) {
+  //       toast.warn(error.response.data.error);
+  //     }
 
-      throw error;
-    }
-  );
+  //     throw error;
+  //   }
+  // );
 
   return api;
 };
