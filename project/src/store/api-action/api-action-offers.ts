@@ -5,7 +5,7 @@ import { AppDispatch } from "../../types/state";
 import { RoomOffer } from '../../types/room-offer';
 import { APIRoute } from '../../const';
 import { Review } from '../../types/review';
-import { toast } from 'react-toastify';
+import { pushNotification } from '../notification/notification';
 
 const fetchOffersList = createAsyncThunk<RoomOffer[], undefined, {
   dispatch: AppDispatch;
@@ -13,13 +13,12 @@ const fetchOffersList = createAsyncThunk<RoomOffer[], undefined, {
   extra: AxiosInstance;
 }>(
   'data/fetchOffersList ',
-  async (_arg, {dispatch, extra: api}) => {
+  async (_arg, {dispatch, extra: api,  rejectWithValue}) => {
     try {
-      const {data} = await api.get<RoomOffer[]>(APIRoute.Offers);
+      const { data } = await api.get<RoomOffer[]>(APIRoute.Offers);
     return data;
   } catch (e) {
-    toast.error('Please reload the page if you want to send a message again');
-    throw e;
+    return rejectWithValue (e);
   }
   },
 );
@@ -30,13 +29,12 @@ const fetchOffer = createAsyncThunk<RoomOffer, undefined, {
   extra: AxiosInstance;
 }>(
   'data/fetchOffer ',
-  async (id, {dispatch, extra: api}) => {
+  async (id, {dispatch, extra: api,  rejectWithValue}) => {
     try {
-      const {data} = await api.get(`${APIRoute.Offer}/${id}`);
+      const { data } = await api.get(`${APIRoute.Offer}/${id}`);
       return data;
     } catch (e) {
-    toast.error('Please reload the page if you want to send a message again');
-    throw e;
+      return rejectWithValue (e);
     }
 
   },
@@ -49,9 +47,31 @@ const fetchComments = createAsyncThunk<Review[], undefined, {
 }>(
   'data/fetchComments ',
   async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
-    return data;
+    try {
+      const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
+      return data;
+    } catch (e) {
+      dispatch(pushNotification({type: 'error', message: 'Can not download comments'}));
+      throw e;
+    }
   },
 );
 
-export { fetchOffersList, fetchComments, fetchOffer };
+const fetchFavorites = createAsyncThunk<RoomOffer[], undefined, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'data/fetchFavorites ',
+  async (_arg, {dispatch, extra: api}) => {
+    try {
+      const { data } = await api.get<RoomOffer[]>(APIRoute.Favorites);
+      return data;
+    } catch (e) {
+      dispatch(pushNotification({type: 'error', message: 'Can not download favorite hotels'}));
+      throw e;
+    }
+  },
+);
+
+export { fetchOffersList, fetchComments, fetchOffer, fetchFavorites };

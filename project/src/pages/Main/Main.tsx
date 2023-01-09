@@ -14,9 +14,7 @@ import { getCity, getSortType } from '../../store/app-process/selectors';
 import { fetchOffersList } from '../../store/api-action/api-action-offers';
 import { checkAuth } from '../../store/api-action/api-action-user';
 import { getAuthCheckedStatus } from '../../store/user-process/selectors';
-
 import { Spinner } from '../../components/Spinner';
-// import { ErrorMessage } from '../../components/ErrorMessage';
 
 function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<number | null>(null);
@@ -35,10 +33,6 @@ function Main(): JSX.Element {
   if (!getAuthCheckedStatus || OffersStatus.isLoading) {
     return <Spinner />;
   }
-
-  // if (OffersStatus.isError) {
-  //   return <ErrorMessage />;
-  // }
 
   const filteredOffers = offers.filter(
     (roomOffer) => roomOffer.city.name === currentCityName

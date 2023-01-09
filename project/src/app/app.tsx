@@ -8,11 +8,17 @@ import { NotFound } from '../pages/NotFound';
 import { PrivateRoute } from '../components/PrivateRoute';
 import { useAppSelector } from '../hooks';
 import { getAuthorizationStatus } from '../store/user-process/selectors';
-import { getOffers } from '../store/offers-data/selectors';
+import { getOffers, getOffersStatus } from '../store/offers-data/selectors';
+import { ErrorMessage } from '../components/ErrorMessage';
 
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const roomOffers = useAppSelector(getOffers);
+  const OffersStatus = useAppSelector(getOffersStatus);
+
+  if (OffersStatus.isError) {
+    return <ErrorMessage />;
+  }
 
   return (
     <Routes>

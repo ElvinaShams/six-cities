@@ -1,14 +1,41 @@
-.errorPage {
-  width: 100%;
+.container{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: white;
+
 }
 
-.error {
+.button{
+  padding: 10px 20px;
   display: block;
-  background-color: #FFBABA;
-  margin: 300px auto;
-  padding: 20px 20px;
-  color: #D8000C;
-  font-size: 19px;
+  font-size: 21px;
+  line-height: 1.211;
+  font-weight: 300;
   font-style: oblique;
-  width: 700px;
+  transform: skew(-15deg);
+  border-radius: 3px;
+  background-color: #4481c3;
+  text-shadow: 1px 0 0, 0.5px 0 0, -1px 0 0;
+  color: white;
+  border: none;
+}
+
+.button:hover {
+  background-color: #5488bf;
+}
+
+.button:active {
+  background-color: #90bceb;
+}
+
+.btnText{
+  display: block;
+  transform: skew(15deg);
+}
+
+.errorText{
+  font-size: large;
 }
