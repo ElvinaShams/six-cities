@@ -12,7 +12,7 @@ function PrivateRoute({
   redirectTo,
   authorizationStatus,
 }: PrivateRouteProps) {
-  if (authorizationStatus === AuthStatus.noAuth) {
+  if (authorizationStatus === AuthStatus.NoAuth) {
     return <Navigate to={redirectTo} />;
   }
 

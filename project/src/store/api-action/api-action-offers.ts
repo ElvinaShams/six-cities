@@ -1,36 +1,95 @@
 import { State } from './../../types/state';
-import { createAsyncThunk } from "@reduxjs/toolkit";
-import { AxiosInstance } from "axios";
-import { AppDispatch } from "../../types/state";
+import { createAsyncThunk } from '@reduxjs/toolkit';
+import { AxiosInstance } from 'axios';
+import { AppDispatch } from '../../types/state';
 import { RoomOffer } from '../../types/room-offer';
 import { APIRoute } from '../../const';
-import { loadComments, loadRoomOffers, setOffersDataLoadingStatus } from '../action';
 import { Review } from '../../types/review';
+import { pushNotification } from '../notification/notification';
 
-const fetchOffersList = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'data/fetchOffersList ',
-  async (_arg, {dispatch, extra: api}) => {
-    dispatch(setOffersDataLoadingStatus(true));
-    const {data} = await api.get<RoomOffer[]>(APIRoute.Offers);
-    dispatch(setOffersDataLoadingStatus(false));
-    dispatch(loadRoomOffers(data));
-  },
+const fetchOffersList = createAsyncThunk<RoomOffer[], undefined,
+  {
+    dispatch: AppDispatch,
+    state: State,
+    extra: AxiosInstance,
+  }
+>(
+  'data/fetchOffersList',
+  async (_arg, { dispatch, extra: api, rejectWithValue }) => {
+    try {
+      const { data } = await api.get<RoomOffer[]>(APIRoute.Offers);
+      return data;
+    } catch (e) {
+      dispatch(
+        pushNotification({
+          type: 'error',
+          message: 'Can not download offers',
+        })
+      );
+      return rejectWithValue(e);
+    }
+
+  }
 );
 
-const fetchComments = createAsyncThunk<void, undefined, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
-  'data/fetchComments ',
-  async (id, {dispatch, extra: api}) => {
-    const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
-    dispatch(loadComments(data));
-  },
-);
+const fetchOffer = createAsyncThunk<RoomOffer, undefined,
+  {
+    dispatch: AppDispatch,
+    state: State,
+    extra: AxiosInstance,
+  }
+>('data/fetchOffer', async (id, { dispatch, extra: api, rejectWithValue }) => {
+  try {
+    const { data } = await api.get(`${APIRoute.Offer}/${id}`);
+    return data;
+  } catch (e) {
+    dispatch(
+      pushNotification({
+        type: 'error',
+        message: 'Can not download offer',
+      })
+    );
+    return rejectWithValue(e);
+  }
+});
 
-export { fetchOffersList, fetchComments };
+const fetchComments = createAsyncThunk<Review[], undefined,
+  {
+    dispatch: AppDispatch,
+    state: State,
+    extra: AxiosInstance,
+  }
+>('data/fetchComments', async (id, { dispatch, extra: api, rejectWithValue }) => {
+  try {
+    const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
+    return data;
+  } catch (e) {
+    dispatch(
+      pushNotification({ type: 'error', message: 'Can not download comments' })
+    );
+    return rejectWithValue(e);
+  }
+});
+
+const fetchFavorites = createAsyncThunk<RoomOffer[], undefined,
+  {
+    dispatch: AppDispatch,
+    state: State,
+    extra: AxiosInstance,
+  }
+>('data/fetchFavorites', async (_arg, { dispatch, extra: api, rejectWithValue }, ) => {
+  try {
+    const { data } = await api.get<RoomOffer[]>(APIRoute.Favorites);
+    return data;
+  } catch (e) {
+    dispatch(
+      pushNotification({
+        type: 'error',
+        message: 'Can not download favorite hotels',
+      })
+    );
+    return rejectWithValue(e);
+  }
+});
+
+export { fetchOffersList, fetchComments, fetchOffer, fetchFavorites };

@@ -2,15 +2,18 @@ import { MouseEvent } from 'react';
 import { Link } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { logout } from '../../store/api-action/api-action-logout';
-import { getAuthorizationStatus, getUserData } from '../../store/selectors';
+import { logout } from '../../store/api-action/api-action-user';
+import {
+  getAuthorizationStatus,
+  getUserData,
+} from '../../store/user-process/selectors';
 
 function UserNav() {
   const dispatch = useAppDispatch();
 
   const userData = useAppSelector(getUserData);
   const isAuth: boolean =
-    useAppSelector(getAuthorizationStatus) === AuthStatus.auth;
+    useAppSelector(getAuthorizationStatus) === AuthStatus.Auth;
 
   const handleSignOutClick = (evt: MouseEvent) => {
     evt.preventDefault();

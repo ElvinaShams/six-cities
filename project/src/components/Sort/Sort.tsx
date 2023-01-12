@@ -1,19 +1,20 @@
 import { useRef, useState } from 'react';
 import { SortTypes } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { setSortType } from '../../store/action';
 import cn from 'classnames';
 import { useOnClickOutside } from '../../hooks/useOnClickOutside';
 import { useEscapePress } from '../../hooks/useEscapePress';
+import { getSortType } from '../../store/app-process/selectors';
+import { sortOffers } from '../../store/app-process/app-process';
 
 function Sort() {
   const dispatch = useAppDispatch();
-  const sortType = useAppSelector((state) => state.sortType);
+  const sortType = useAppSelector(getSortType);
   const [open, setOpen] = useState(false);
   const sortRef = useRef<HTMLDivElement>(null);
 
   const onClickSortItem = (sortType: SortTypes) => {
-    dispatch(setSortType(sortType));
+    dispatch(sortOffers(sortType));
     setOpen(false);
   };
 
