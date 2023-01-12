@@ -14,9 +14,9 @@ import { ErrorMessage } from '../components/ErrorMessage';
 function App(): JSX.Element {
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
   const roomOffers = useAppSelector(getOffers);
-  const OffersStatus = useAppSelector(getOffersStatus);
+  const offersStatus = useAppSelector(getOffersStatus);
 
-  if (OffersStatus.isError) {
+  if (offersStatus.isError) {
     return <ErrorMessage />;
   }
 
@@ -45,5 +45,4 @@ function App(): JSX.Element {
     </Routes>
   );
 }
-
 export default App;

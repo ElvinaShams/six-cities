@@ -8,7 +8,6 @@ type InitialState = {
 
 const initialState:InitialState = {
   notifications: [],
-
 };
 
 export const notifications = createSlice({
@@ -25,4 +24,4 @@ export const notifications = createSlice({
   }
 });
 
-export const {pushNotification, clearNotification} = notifications.actions;
+export const { pushNotification, clearNotification } = notifications.actions;

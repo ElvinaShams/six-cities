@@ -13,7 +13,7 @@ import { getOffers, getOffersStatus } from '../../store/offers-data/selectors';
 import { getCity, getSortType } from '../../store/app-process/selectors';
 import { fetchOffersList } from '../../store/api-action/api-action-offers';
 import { checkAuth } from '../../store/api-action/api-action-user';
-import { getAuthCheckedStatus } from '../../store/user-process/selectors';
+import { getIsAuth } from '../../store/user-process/selectors';
 import { Spinner } from '../../components/Spinner';
 
 function Main(): JSX.Element {
@@ -22,15 +22,14 @@ function Main(): JSX.Element {
   const currentCityName = useAppSelector(getCity);
   const offers = useAppSelector(getOffers);
   const sortType = useAppSelector(getSortType);
-
-  const OffersStatus = useAppSelector(getOffersStatus);
+  const offersStatus = useAppSelector(getOffersStatus);
 
   useEffect(() => {
     dispatch(fetchOffersList());
     dispatch(checkAuth());
   }, [dispatch]);
 
-  if (!getAuthCheckedStatus || OffersStatus.isLoading) {
+  if (!getIsAuth || offersStatus.isLoading) {
     return <Spinner />;
   }
 
@@ -39,6 +38,7 @@ function Main(): JSX.Element {
   );
 
   const sortOffersType: RoomOffer[] = sortOffers(sortType, filteredOffers);
+
   const handleChangeCity = (name: string) => {
     dispatch(changeCity(name));
   };

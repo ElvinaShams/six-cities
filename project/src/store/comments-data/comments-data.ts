@@ -1,24 +1,23 @@
-import {createSlice} from '@reduxjs/toolkit';
-import { NameSpace } from "../../const";
+import { createSlice } from '@reduxjs/toolkit';
+import { NameSpace } from '../../const';
 import { Review } from '../../types/review';
-import { fetchComments} from '../api-action/api-action-offers';
+import { fetchComments } from '../api-action/api-action-offers';
 
 type InitialState = {
-  comments:Review[],
-}
-
-const initialState:InitialState = {
-  comments:[],
+  comments: Review[],
 };
 
-export const CommentsData = createSlice({
+const initialState: InitialState = {
+  comments: [],
+};
+
+export const commentsData = createSlice({
   name: NameSpace.Comments,
   initialState,
   reducers: {},
   extraReducers(builder) {
-    builder
-    .addCase(fetchComments.fulfilled, (state, action) => {
+    builder.addCase(fetchComments.fulfilled, (state, action) => {
       state.comments = action.payload;
-    })
-  }
+    });
+  },
 });

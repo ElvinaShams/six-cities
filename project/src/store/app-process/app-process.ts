@@ -1,17 +1,17 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { cities, NameSpace, SortTypes } from "../../const";
-import { UserData } from "../../types/user-data";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { cities, NameSpace, SortTypes } from '../../const';
+import { UserData } from '../../types/user-data';
 
 type InitialState = {
   city: string,
   sortType: SortTypes,
   user: UserData | null,
-}
+};
 
-const initialState:InitialState = {
+const initialState: InitialState = {
   city: cities[0].name,
- sortType: SortTypes.Popular,
- user: null,
+  sortType: SortTypes.Popular,
+  user: null,
 };
 
 export const appProcess = createSlice({
@@ -23,8 +23,8 @@ export const appProcess = createSlice({
     },
     sortOffers: (state, action: PayloadAction<SortTypes>) => {
       state.sortType = action.payload;
+    },
   },
-  }
 });
 
-export const {changeCity, sortOffers } = appProcess.actions;
+export const { changeCity, sortOffers } = appProcess.actions;

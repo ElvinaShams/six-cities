@@ -1,16 +1,17 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
+import { TIMER_ERROR } from '../../const';
 import { clearNotification } from '../../store/notification/notification';
 import { getNotifications } from '../../store/notification/selectors';
 
-function Notification() {
+function Notification(): JSX.Element {
   const notifications = useSelector(getNotifications);
   const dispatch = useDispatch();
 
   const renderNotification = () => {
     notifications.forEach((notification) => {
       const toastOPtions = {
-        autoClose: notification.duration,
+        autoClose: notification.duration || TIMER_ERROR,
         toastId: notification.id,
         onClose: () => dispatch(clearNotification(notification.id)),
       };
@@ -34,7 +35,7 @@ function Notification() {
     });
   };
 
-  return <>{renderNotification}</>;
+  return <>{renderNotification()}</>;
 }
 
 export { Notification };
