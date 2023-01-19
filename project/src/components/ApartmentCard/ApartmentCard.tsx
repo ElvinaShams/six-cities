@@ -16,19 +16,16 @@ const properties = {
     className: 'cities',
     width: 260,
     height: 200,
-    placeCardActive: '',
   },
   favorite: {
     className: 'favorites',
     width: 150,
     height: 110,
-    placeCardActive: 'place-card__bookmark-button--active',
   },
   property: {
     className: 'near-places',
     width: 260,
     height: 200,
-    placeCardActive: 'place-card__bookmark-button--active',
   },
 };
 
@@ -48,7 +45,7 @@ function ApartmentCard({
     type,
     isFavorite,
   } = roomOffer;
-  const { className, width, height, placeCardActive } = properties[card];
+  const { className, width, height } = properties[card];
 
   const ratingValue = getRating(Math.round(rating));
 
@@ -86,10 +83,7 @@ function ApartmentCard({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <CardBookmarkButton
-            placeCardActive={placeCardActive}
-            isFavorite={isFavorite}
-          />
+          <CardBookmarkButton page="place-card" isFavorite={isFavorite} />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

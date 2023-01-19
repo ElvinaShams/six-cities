@@ -33,14 +33,11 @@ function App(): JSX.Element {
             redirectTo={AppRoute.Main}
             authorizationStatus={authorizationStatus}
           >
-            <Favorites roomOffers={roomOffers} />
+            <Favorites />
           </PrivateRoute>
         }
       />
-      <Route
-        path={AppRoute.Room}
-        element={<Property roomOffers={roomOffers} />}
-      />
+      <Route path={AppRoute.Room} element={<Property />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

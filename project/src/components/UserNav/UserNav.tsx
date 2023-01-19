@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logout } from '../../store/api-action/api-action-user';
+import { getFavorites } from '../../store/favorites/selectors';
 import {
   getAuthorizationStatus,
   getUserData,
@@ -12,6 +13,7 @@ function UserNav() {
   const dispatch = useAppDispatch();
 
   const userData = useAppSelector(getUserData);
+  const favoriteOffers = useAppSelector(getFavorites);
   const isAuth: boolean =
     useAppSelector(getAuthorizationStatus) === AuthStatus.Auth;
 
@@ -41,17 +43,19 @@ function UserNav() {
                 <span className="header__user-name user__name">
                   {userData?.email}
                 </span>
-                <span className="header__favorite-count">3</span>
+                <span className="header__favorite-count">
+                  {favoriteOffers.length}
+                </span>
               </Link>
             </li>
             <li className="header__nav-item">
-              <a
+              <Link
                 className="header__nav-link"
-                href="/#"
+                to={AppRoute.Main}
                 onClick={handleSignOutClick}
               >
                 <span className="header__signout">Sign out</span>
-              </a>
+              </Link>
             </li>
           </>
         ) : (

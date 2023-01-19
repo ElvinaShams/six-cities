@@ -1,12 +1,19 @@
+import cn from 'classnames';
+
 type CardButtonProps = {
-  placeCardActive: string,
   isFavorite: boolean,
+  page: 'place-card' | 'property',
 };
 
-function CardBookmarkButton({ placeCardActive, isFavorite }: CardButtonProps) {
+function CardBookmarkButton({ page, isFavorite }: CardButtonProps) {
+  const favoriteCard = `${page}__bookmark-button--active`;
+
   return (
     <button
-      className={`place-card__bookmark-button ${placeCardActive} button`}
+      className={cn(
+        `${page}__bookmark-button,  button`,
+        isFavorite && favoriteCard
+      )}
       type="button"
     >
       <svg className="place-card__bookmark-icon" width="18" height="19">

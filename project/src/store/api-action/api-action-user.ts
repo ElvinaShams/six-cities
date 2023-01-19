@@ -38,7 +38,6 @@ const loginAction = createAsyncThunk<UserData, AuthData, {
       throw e;
     }
   },
-
 );
 
 const logout = createAsyncThunk<void, undefined, {

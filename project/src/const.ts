@@ -63,6 +63,7 @@ enum AuthStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
+  Loading = 'LOADING',
 }
 
 enum APIRoute {
@@ -81,6 +82,7 @@ enum NameSpace {
   Comments = 'COMMENTS',
   Favorites = 'Favorites',
   Notifications = 'Notifications',
+  Hotels = 'HOTELS'
 }
 
 enum FetchStatus {

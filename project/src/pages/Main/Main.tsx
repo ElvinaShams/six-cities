@@ -45,12 +45,6 @@ function Main(): JSX.Element {
 
   const handleMouseOver = (id: number | null) => setActiveCard(id);
 
-  const points = offers.map((offer) => ({
-    id: offer.id,
-    latitude: offer.location.latitude,
-    longitude: offer.location.longitude,
-  }));
-
   return (
     <>
       <div className="page page--gray page--main">
@@ -79,7 +73,7 @@ function Main(): JSX.Element {
                   <Map
                     className="cities"
                     city={sortOffersType[0].city}
-                    points={points}
+                    points={filteredOffers}
                     activeCard={activeCard}
                   />
                 </div>

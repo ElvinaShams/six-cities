@@ -1,20 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { FetchStatus, NameSpace } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
-import { fetchOffer, fetchOffersList } from '../api-action/api-action-offers';
+import {
+  fetchNearby,
+  fetchProperty,
+  fetchOffersList,
+} from '../api-action/api-action-offers';
 
 type InitialState = {
   roomOffers: RoomOffer[],
-  offer: RoomOffer | null,
-  offerStatus: FetchStatus,
+  nearby: RoomOffer[],
+  property: RoomOffer | null,
   offersStatus: FetchStatus,
+  nearbyStatus: FetchStatus,
+  propertyStatus: FetchStatus,
 };
 
 const initialState: InitialState = {
   roomOffers: [],
-  offer: null,
-  offerStatus: FetchStatus.Idle,
+  nearby: [],
+  property: null,
   offersStatus: FetchStatus.Idle,
+  nearbyStatus: FetchStatus.Idle,
+  propertyStatus: FetchStatus.Idle,
 };
 
 export const offersData = createSlice({
@@ -32,16 +40,20 @@ export const offersData = createSlice({
       })
       .addCase(fetchOffersList.rejected, (state) => {
         state.offersStatus = FetchStatus.Failed;
-        state.offerStatus = FetchStatus.Failed;
       })
-      .addCase(fetchOffer.pending, (state) => {
-        state.offerStatus = FetchStatus.Loading;
-        state.offersStatus = FetchStatus.Loading;
+      .addCase(fetchProperty.fulfilled, (state, action) => {
+        state.property = action.payload;
+        state.propertyStatus = FetchStatus.Success;
       })
-      .addCase(fetchOffer.fulfilled, (state, action) => {
-        state.offer = action.payload;
-        state.offerStatus = FetchStatus.Success;
-        state.offersStatus = FetchStatus.Success;
+      .addCase(fetchNearby.fulfilled, (state, action) => {
+        state.nearby = action.payload;
+        state.nearbyStatus = FetchStatus.Success;
+      })
+      .addCase(fetchNearby.rejected, (state) => {
+        state.nearbyStatus = FetchStatus.Failed;
+      })
+      .addCase(fetchNearby.pending, (state) => {
+        state.nearbyStatus = FetchStatus.Loading;
       });
   },
 });

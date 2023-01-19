@@ -1,9 +1,12 @@
 import React, { FormEvent, useState } from 'react';
 import cn from 'classnames';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 import styles from './Login.module.css';
 import { loginAction } from '../../store/api-action/api-action-user';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
+import { AuthStatus } from '../../const';
+
 
 const formField = {
   email: 'E-mail',
@@ -39,6 +42,11 @@ function Login(): JSX.Element {
     },
   });
 
+  const authStatus = useAppSelector(getAuthorizationStatus);
+
+  const isLoading = authStatus === AuthStatus.Loading;
+
+
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
     const rule = formState[name].regex;
@@ -64,6 +72,8 @@ function Login(): JSX.Element {
       })
     );
   };
+
+  const noValidForm = Object.values(formState).some((item) => item.error)
 
   return (
     <>
@@ -91,7 +101,7 @@ function Login(): JSX.Element {
                 placeholder={label}
                 value={formState[name].value}
               />
-              {formState[name].error && <p> {formState[name].errorText}</p>}
+              {formState[name].error && <p className={styles.errorText}> {formState[name].errorText}</p>}
             </div>
           );
         })}
@@ -99,9 +109,9 @@ function Login(): JSX.Element {
         <button
           className="login__submit form__submit button"
           type="submit"
-          disabled={Object.values(formState).some((item) => item.error)}
+          disabled={noValidForm || isLoading}
         >
-          Sign in
+          {isLoading ? 'Signing in' : 'Sign in'}
         </button>
       </form>
     </>
