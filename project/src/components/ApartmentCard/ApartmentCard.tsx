@@ -3,6 +3,8 @@ import { AppRoute } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
 import { getRating } from '../../util';
 import { CardBookmarkButton } from '../CardBookmarkButton';
+import { useAppDispatch } from '../../hooks';
+import { postFavorites } from '../../store/api-action/api-action-offers';
 
 type ApartmentCardProps = {
   card: 'main' | 'favorite' | 'property',
@@ -35,6 +37,8 @@ function ApartmentCard({
   onMouseLeave,
   card,
 }: ApartmentCardProps) {
+  const dispatch = useAppDispatch();
+
   const {
     id,
     previewImage,
@@ -50,6 +54,13 @@ function ApartmentCard({
   const ratingValue = getRating(Math.round(rating));
 
   const getFirstCapital = (str: string) => str[0]?.toUpperCase() + str.slice(1);
+
+  const changeFavorite = () => {
+    const { id, isFavorite } = roomOffer;
+    const status = isFavorite ? 1 : 0;
+
+    dispatch(postFavorites({ id, status }));
+  };
 
   return (
     <article
@@ -83,7 +94,11 @@ function ApartmentCard({
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <CardBookmarkButton page="place-card" isFavorite={isFavorite} />
+          <CardBookmarkButton
+            page="place-card"
+            isFavorite={isFavorite}
+            changeFavorite={changeFavorite}
+          />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">

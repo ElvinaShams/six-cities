@@ -14,6 +14,7 @@ import {
   fetchComments,
   fetchNearby,
   fetchProperty,
+  postFavorites,
 } from '../../store/api-action/api-action-offers';
 import {
   getNearbyOffers,
@@ -68,6 +69,13 @@ function Property(): JSX.Element {
 
   const ratingHotel = (Math.round(rating) * 100) / MAX_RATING;
 
+  const changeFavorite = () => {
+    const { id, isFavorite } = property;
+    const status = isFavorite ? 1 : 0;
+
+    dispatch(postFavorites({ id, status }));
+  };
+
   return (
     <div className="page">
       <Layout>
@@ -85,7 +93,11 @@ function Property(): JSX.Element {
                 )}
                 <div className="property__name-wrapper">
                   <h1 className="property__name">{title}</h1>
-                  <CardBookmarkButton page="property" isFavorite={isFavorite} />
+                  <CardBookmarkButton
+                    page="property"
+                    isFavorite={isFavorite}
+                    changeFavorite={changeFavorite}
+                  />
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">

@@ -3,9 +3,14 @@ import cn from 'classnames';
 type CardButtonProps = {
   isFavorite: boolean,
   page: 'place-card' | 'property',
+  changeFavorite: () => void,
 };
 
-function CardBookmarkButton({ page, isFavorite }: CardButtonProps) {
+function CardBookmarkButton({
+  page,
+  isFavorite,
+  changeFavorite,
+}: CardButtonProps) {
   const favoriteCard = `${page}__bookmark-button--active`;
 
   return (
@@ -15,6 +20,7 @@ function CardBookmarkButton({ page, isFavorite }: CardButtonProps) {
         isFavorite && favoriteCard
       )}
       type="button"
+      onClick={() => changeFavorite}
     >
       <svg className="place-card__bookmark-icon" width="18" height="19">
         <use xlinkHref="#icon-bookmark"></use>

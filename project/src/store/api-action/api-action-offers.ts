@@ -175,10 +175,10 @@ const postFavorites = createAsyncThunk<
   }
 >(
   'favorite/postFavorites',
-  async ({ id, isFavorite }, { dispatch, extra: api }) => {
+  async ({ id, status }, { dispatch, extra: api }) => {
     try {
       const { data } = await api.post<RoomOffer>(
-        `4{APIRoute.Favorites}/${id}/${isFavorite}`
+        `4{APIRoute.Favorites}/${id}/${status}`
       );
 
       return data;
