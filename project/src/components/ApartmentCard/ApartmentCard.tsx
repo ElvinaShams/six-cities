@@ -56,10 +56,11 @@ function ApartmentCard({
   const getFirstCapital = (str: string) => str[0]?.toUpperCase() + str.slice(1);
 
   const changeFavorite = () => {
-    const { id, isFavorite } = roomOffer;
-    const status = isFavorite ? 1 : 0;
+    if (roomOffer) {
+      const { id, isFavorite } = roomOffer;
 
-    dispatch(postFavorites({ id, status }));
+      dispatch(postFavorites({ id, isFavorite }));
+    }
   };
 
   return (

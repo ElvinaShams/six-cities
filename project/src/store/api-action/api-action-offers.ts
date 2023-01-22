@@ -1,12 +1,13 @@
 import { State } from './../../types/state';
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { AxiosInstance } from 'axios';
+import { AxiosError, AxiosInstance } from 'axios';
 import { AppDispatch } from '../../types/state';
 import { RoomOffer } from '../../types/room-offer';
-import { APIRoute } from '../../const';
+import { APIRoute, AppRoute } from '../../const';
 import { Review, ReviewComment } from '../../types/review';
 import { pushNotification } from '../notification/notification';
 import { FavoriteType } from '../../types/cities';
+import { redirectToRoute } from '../action';
 
 const fetchOffersList = createAsyncThunk<
   RoomOffer[],
@@ -22,14 +23,14 @@ const fetchOffersList = createAsyncThunk<
     try {
       const { data } = await api.get<RoomOffer[]>(APIRoute.Offers);
       return data;
-    } catch (e) {
+    } catch (err) {
       dispatch(
         pushNotification({
           type: 'error',
           message: 'Can not download offers',
         })
       );
-      return rejectWithValue(e);
+      throw err;
     }
   }
 );
@@ -47,6 +48,11 @@ const fetchProperty = createAsyncThunk<
     const { data } = await api.get(`${APIRoute.Offers}/${id}`);
     return data;
   } catch (err) {
+    if (err instanceof AxiosError) {
+      if (err.response?.status === 404) {
+        dispatch(redirectToRoute(AppRoute.NotFound));
+      }
+    }
     dispatch(
       pushNotification({
         type: 'error',
@@ -71,14 +77,14 @@ const fetchComments = createAsyncThunk<
     try {
       const { data } = await api.get<Review[]>(`${APIRoute.Comments}/${id}`);
       return data;
-    } catch (e) {
+    } catch (err) {
       dispatch(
         pushNotification({
           type: 'error',
           message: 'Can not download comments',
         })
       );
-      return rejectWithValue(e);
+      throw err;
     }
   }
 );
@@ -128,14 +134,14 @@ const fetchNearby = createAsyncThunk<
       `${APIRoute.Offers}/${id}/nearby`
     );
     return data;
-  } catch (e) {
+  } catch (err) {
     dispatch(
       pushNotification({
         type: 'error',
         message: 'Can not download nearby hotels',
       })
     );
-    return rejectWithValue(e);
+    throw err;
   }
 });
 
@@ -153,14 +159,14 @@ const fetchFavorites = createAsyncThunk<
     try {
       const { data } = await api.get<RoomOffer[]>(APIRoute.Favorites);
       return data;
-    } catch (e) {
+    } catch (err) {
       dispatch(
         pushNotification({
           type: 'error',
           message: 'Can not download favorite hotels',
         })
       );
-      return rejectWithValue(e);
+      throw err;
     }
   }
 );
@@ -175,21 +181,22 @@ const postFavorites = createAsyncThunk<
   }
 >(
   'favorite/postFavorites',
-  async ({ id, status }, { dispatch, extra: api }) => {
+  async ({ id, isFavorite }, { dispatch, extra: api }) => {
     try {
+      const status = isFavorite ? 1 : 0;
       const { data } = await api.post<RoomOffer>(
-        `4{APIRoute.Favorites}/${id}/${status}`
+        `${APIRoute.Favorites}/${id}/${status}`
       );
 
       return data;
-    } catch (e) {
+    } catch (err) {
       dispatch(
         pushNotification({
           type: 'error',
           message: 'Can not add to favorites.',
         })
       );
-      throw e;
+      throw err;
     }
   }
 );

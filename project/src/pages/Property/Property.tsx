@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CardBookmarkButton } from '../../components/CardBookmarkButton';
 import { CardList } from '../../components/CardList';
@@ -8,7 +8,7 @@ import { Layout } from '../../components/Layout';
 import { Map } from '../../components/Map';
 import { ReviewsList } from '../../components/ReviewsList';
 import { Spinner } from '../../components/Spinner';
-import { MAX_RATING } from '../../const';
+import { MAX_COUNT_IMAGES, MAX_RATING } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   fetchComments,
@@ -24,18 +24,14 @@ import {
 import { NotFound } from '../NotFound';
 
 function Property(): JSX.Element {
-  const [activeCard, setActiveCard] = useState<number | null>(null);
   const dispatch = useAppDispatch();
   const { isLoading, isError } = useAppSelector(getOffersStatus);
   const property = useAppSelector(getProperty);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
-  const handleMouseOver = (id: number | null) => setActiveCard(id);
-
   const { id } = useParams();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
     if (id) {
       dispatch(fetchComments(id));
       dispatch(fetchProperty(id));
@@ -43,11 +39,11 @@ function Property(): JSX.Element {
     }
   }, [id, dispatch]);
 
-  if (isLoading) {
+  if (!property || isLoading) {
     return <Spinner />;
   }
 
-  if (!property || isError) {
+  if (isError) {
     return <NotFound />;
   }
 
@@ -70,10 +66,11 @@ function Property(): JSX.Element {
   const ratingHotel = (Math.round(rating) * 100) / MAX_RATING;
 
   const changeFavorite = () => {
-    const { id, isFavorite } = property;
-    const status = isFavorite ? 1 : 0;
+    if (property) {
+      const { id, isFavorite } = property;
 
-    dispatch(postFavorites({ id, status }));
+      dispatch(postFavorites({ id, isFavorite }));
+    }
   };
 
   return (
@@ -82,7 +79,10 @@ function Property(): JSX.Element {
         <main className="page__main page__main--property">
           <section className="property">
             <div className="property__gallery-container container">
-              <GalleryPhotos images={images.slice(0, 6)} type={type} />
+              <GalleryPhotos
+                images={images.slice(0, MAX_COUNT_IMAGES)}
+                type={type}
+              />
             </div>
             <div className="property__container container">
               <div className="property__wrapper">
@@ -101,11 +101,11 @@ function Property(): JSX.Element {
                 </div>
                 <div className="property__rating rating">
                   <div className="property__stars rating__stars">
-                    <span style={{ width: '80%' }}></span>
+                    <span style={{ width: `${ratingHotel}%` }}></span>
                     <span className="visually-hidden">Rating</span>
                   </div>
                   <span className="property__rating-value rating__value">
-                    {ratingHotel}
+                    {rating}
                   </span>
                 </div>
                 <ul className="property__features">
@@ -137,14 +137,12 @@ function Property(): JSX.Element {
                 <ReviewsList />
               </div>
             </div>
-            <section className="property__map map`">
-              <Map
-                className="property"
-                city={city}
-                points={[...nearbyOffers, property]}
-                activeCard={activeCard}
-              />
-            </section>
+            <Map
+              className="property"
+              city={city}
+              points={[...nearbyOffers, property]}
+              activeCard={property.id}
+            />
           </section>
           {nearbyOffers.length > 0 && (
             <div className="container">
@@ -152,11 +150,7 @@ function Property(): JSX.Element {
                 <h2 className="near-places__title">
                   Other places in the neighbourhood
                 </h2>
-                <CardList
-                  page="property"
-                  roomOffers={nearbyOffers}
-                  onMouseOver={handleMouseOver}
-                />
+                <CardList page="property" roomOffers={nearbyOffers} />
               </section>
             </div>
           )}

@@ -24,7 +24,7 @@ export type Point = {
 
 export type FavoriteType = {
   id: number,
-  status: number,
+  isFavorite: boolean,
 };
 
 export type Points = Point[];

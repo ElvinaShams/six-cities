@@ -41,6 +41,12 @@ export const offersData = createSlice({
       .addCase(fetchOffersList.rejected, (state) => {
         state.offersStatus = FetchStatus.Failed;
       })
+      .addCase(fetchProperty.pending, (state) => {
+        state.propertyStatus = FetchStatus.Loading;
+      })
+      .addCase(fetchProperty.rejected, (state) => {
+        state.propertyStatus = FetchStatus.Failed;
+      })
       .addCase(fetchProperty.fulfilled, (state, action) => {
         state.property = action.payload;
         state.propertyStatus = FetchStatus.Success;

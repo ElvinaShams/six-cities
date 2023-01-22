@@ -7,6 +7,7 @@ import { store } from './store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { Notification } from './components/Notification';
+import { ScrollToTop } from './components/ScrollToTop';
 
 
 const root = ReactDOM.createRoot(
@@ -19,6 +20,7 @@ root.render(
       <Provider store={store}>
         <ToastContainer />
         <Notification />
+        <ScrollToTop />
         <App />
       </Provider>
     </React.StrictMode>

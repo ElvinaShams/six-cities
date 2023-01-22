@@ -1,17 +1,15 @@
 type FormRatingProps = {
-  handleClick: (
-    event: React.MouseEvent<HTMLInputElement> & {
-      target: HTMLButtonElement,
-    }
-  ) => void,
+  onChange: (evt: React.ChangeEvent<HTMLInputElement>) => void,
   ratingValue: number,
   ratingTitle: string,
+  disabled?: boolean,
 };
 
 function FormRating({
-  handleClick,
+  onChange,
   ratingValue,
   ratingTitle,
+  disabled,
 }: FormRatingProps) {
   return (
     <>
@@ -21,7 +19,8 @@ function FormRating({
         value={ratingValue}
         id={`${ratingValue}-stars`}
         type="radio"
-        onClick={handleClick}
+        onChange={onChange}
+        disabled={disabled}
       />
       <label
         htmlFor={`${ratingValue}-stars`}

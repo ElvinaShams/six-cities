@@ -1,12 +1,13 @@
 import { useAppSelector } from '../../hooks';
-import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { PropertyForm } from '../PropertyForm';
 import { ReviewItem } from '../ReviewItem/ReviewItem';
 import { getComments } from '../../store/comments-data/selectors';
+import { getIsAuth } from '../../store/user-process/selectors';
 
 function ReviewsList() {
-  const authStatus = useAppSelector(getAuthorizationStatus);
+  const authStatus = useAppSelector(getIsAuth);
   const reviews = useAppSelector(getComments);
+
   return (
     <section className="property__reviews reviews">
       <h2 className="reviews__title">
