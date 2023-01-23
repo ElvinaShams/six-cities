@@ -4,7 +4,7 @@ import { AxiosError, AxiosInstance } from 'axios';
 import { AppDispatch } from '../../types/state';
 import { RoomOffer } from '../../types/room-offer';
 import { APIRoute, AppRoute } from '../../const';
-import { Review, ReviewComment } from '../../types/review';
+import { Review, ReviewCommentPayload } from '../../types/review';
 import { pushNotification } from '../notification/notification';
 import { FavoriteType } from '../../types/cities';
 import { redirectToRoute } from '../action';
@@ -91,7 +91,7 @@ const fetchComments = createAsyncThunk<
 
 const postComment = createAsyncThunk<
   Review[],
-  ReviewComment,
+  ReviewCommentPayload,
   {
     dispatch: AppDispatch,
     state: State,
@@ -99,12 +99,13 @@ const postComment = createAsyncThunk<
   }
 >(
   'comments/postComment',
-  async ({ id, comment, rating }, { dispatch, extra: api }) => {
+  async ({ id, comment, rating, onSuccess }, { dispatch, extra: api }) => {
     try {
       const { data } = await api.post<Review[]>(`${APIRoute.Comments}/${id}`, {
         comment,
         rating,
       });
+      onSuccess();
 
       return data;
     } catch (err) {

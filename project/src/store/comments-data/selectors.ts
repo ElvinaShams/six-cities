@@ -12,11 +12,21 @@ export const getCommentsStatus = (state: State): FetchStatus =>
 export const getPostCommentStatus = (state: State): FetchStatus =>
   state[NameSpace.Comments].postStatus;
 
-export const getCommentStatus = createSelector(
-  [getCommentsStatus],
+export const selectSortedComments = createSelector(
+  [getComments],
+  (comments) => {
+    const sortedComments = comments
+      .slice()
+      .sort((a: Review, b: Review) => Date.parse(b.date) - Date.parse(a.date));
+    return sortedComments;
+  }
+);
+
+export const selectPostCommentStatus = createSelector(
+  [getPostCommentStatus],
   (status) => ({
-    isLoading: [FetchStatus.Idle, FetchStatus.Loading].includes(status),
-    isSuccess: status === FetchStatus.Success,
+    isLoading: status === FetchStatus.Loading,
     isError: status === FetchStatus.Failed,
+    isSuccess: status === FetchStatus.Success,
   })
 );

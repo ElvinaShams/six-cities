@@ -1,12 +1,14 @@
 import { useAppSelector } from '../../hooks';
 import { PropertyForm } from '../PropertyForm';
 import { ReviewItem } from '../ReviewItem/ReviewItem';
-import { getComments } from '../../store/comments-data/selectors';
+import { selectSortedComments } from '../../store/comments-data/selectors';
 import { getIsAuth } from '../../store/user-process/selectors';
 
 function ReviewsList() {
   const authStatus = useAppSelector(getIsAuth);
-  const reviews = useAppSelector(getComments);
+  const reviews = useAppSelector(selectSortedComments);
+
+  console.log(reviews);
 
   return (
     <section className="property__reviews reviews">

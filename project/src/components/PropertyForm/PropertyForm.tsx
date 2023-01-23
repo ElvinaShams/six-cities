@@ -3,41 +3,38 @@ import { useState, ChangeEvent } from 'react';
 import { REVIEW_MIN_LENGTH, REVIEW_MAX_LENGTH, RatingValue } from '../../const';
 import { FormRating } from '../FormRating';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { FormEvent } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { getCommentStatus } from '../../store/comments-data/selectors';
-import { ReviewComment } from '../../types/review';
+import { selectPostCommentStatus } from '../../store/comments-data/selectors';
 import { postComment } from '../../store/api-action/api-action-offers';
 
 function PropertyForm(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { id } = useParams();
-  const { isLoading, isSuccess } = useAppSelector(getCommentStatus);
+  const { isLoading } = useAppSelector(selectPostCommentStatus);
   const [rating, setRating] = useState('');
   const [comment, setComment] = useState('');
 
-  const onSubmit = (data: ReviewComment) => {
-    dispatch(postComment(data));
-  };
-
-  const handleFormSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
-    evt.preventDefault();
-
-    if (id) {
-      onSubmit({ id: Number(id), rating: Number(rating), comment });
-    }
-  };
+  const { id } = useParams();
 
   const clearForm = () => {
     setComment('');
     setRating('');
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      clearForm();
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (id) {
+      dispatch(
+        postComment({
+          id: Number(id),
+          rating: Number(rating),
+          comment,
+          onSuccess: clearForm,
+        })
+      );
     }
-  }, [isSuccess]);
+  };
 
   const isValid =
     comment.length > REVIEW_MIN_LENGTH && comment.length < REVIEW_MAX_LENGTH;
@@ -47,7 +44,7 @@ function PropertyForm(): JSX.Element {
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) =>
     setComment(event.target.value);
 
-  const handleRatingChange = (evt: React.ChangeEvent<HTMLInputElement>) =>
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) =>
     setRating(evt.target.value);
 
   return (
@@ -87,7 +84,7 @@ function PropertyForm(): JSX.Element {
           type="submit"
           disabled={isDisabled || isLoading}
         >
-          Submit
+          {isLoading ? 'Submiting' : 'Submit'}
         </button>
       </div>
     </form>

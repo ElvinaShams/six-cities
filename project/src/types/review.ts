@@ -11,8 +11,9 @@ export type Review = {
   },
 };
 
-export type ReviewComment = {
+export type ReviewCommentPayload = {
   comment: string,
   rating: number,
   id: number,
+  onSuccess: () => void,
 };

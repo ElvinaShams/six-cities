@@ -2,7 +2,7 @@ import { Icon, Marker } from 'leaflet';
 import { useRef, useEffect } from 'react';
 import { iconAnchor, IconSize, MapIconUrl } from '../../const';
 import { useMap } from '../../hooks';
-import { City, Points } from '../../types/cities';
+import { City } from '../../types/cities';
 import 'leaflet/dist/leaflet.css';
 import { RoomOffer } from '../../types/room-offer';
 

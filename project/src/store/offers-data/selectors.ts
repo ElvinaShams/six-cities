@@ -17,14 +17,14 @@ export const getPropertyStatus = (state: State): FetchStatus =>
 export const getNearbyOffers = (state: State): RoomOffer[] =>
   state[NameSpace.Offers].nearby;
 
-export const getOffersStatus = createSelector([getStatus], (status) => ({
-  isLoading: [FetchStatus.Idle, FetchStatus.Loading].includes(status),
-  isSuccess: status === FetchStatus.Success,
-  isError: status === FetchStatus.Failed,
-}));
+const createSelectorsStatus = (selector: any) => {
+  return createSelector([selector], (status) => ({
+    isLoading: [FetchStatus.Idle, FetchStatus.Loading].includes(status),
+    isSuccess: status === FetchStatus.Success,
+    isError: status === FetchStatus.Failed,
+  }));
+};
 
-export const getOfferStatus = createSelector([getPropertyStatus], (status) => ({
-  isLoading: [FetchStatus.Idle, FetchStatus.Loading].includes(status),
-  isSuccess: status === FetchStatus.Success,
-  isError: status === FetchStatus.Failed,
-}));
+export const getOffersStatus = createSelectorsStatus(getStatus);
+
+export const getOfferStatus = createSelectorsStatus(getPropertyStatus);

@@ -1,3 +1,4 @@
+import { ErrorMessage } from '../../components/ErrorMessage';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CardBookmarkButton } from '../../components/CardBookmarkButton';
@@ -18,14 +19,13 @@ import {
 } from '../../store/api-action/api-action-offers';
 import {
   getNearbyOffers,
-  getOffersStatus,
+  getOfferStatus,
   getProperty,
 } from '../../store/offers-data/selectors';
-import { NotFound } from '../NotFound';
 
 function Property(): JSX.Element {
   const dispatch = useAppDispatch();
-  const { isLoading, isError } = useAppSelector(getOffersStatus);
+  const { isLoading, isError } = useAppSelector(getOfferStatus);
   const property = useAppSelector(getProperty);
   const nearbyOffers = useAppSelector(getNearbyOffers);
 
@@ -44,7 +44,7 @@ function Property(): JSX.Element {
   }
 
   if (isError) {
-    return <NotFound />;
+    return <ErrorMessage />;
   }
 
   const {

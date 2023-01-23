@@ -7,7 +7,6 @@ import { loginAction } from '../../store/api-action/api-action-user';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import { AuthStatus } from '../../const';
 
-
 const formField = {
   email: 'E-mail',
   password: 'Password',
@@ -46,7 +45,6 @@ function Login(): JSX.Element {
 
   const isLoading = authStatus === AuthStatus.Loading;
 
-
   const handleChange = ({ target }: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = target;
     const rule = formState[name].regex;
@@ -73,7 +71,9 @@ function Login(): JSX.Element {
     );
   };
 
-  const noValidForm = Object.values(formState).some((item) => item.error)
+  const noValidForm = Object.values(formState).some(
+    (item) => item.error || !item.value
+  );
 
   return (
     <>
@@ -101,7 +101,9 @@ function Login(): JSX.Element {
                 placeholder={label}
                 value={formState[name].value}
               />
-              {formState[name].error && <p className={styles.errorText}> {formState[name].errorText}</p>}
+              {formState[name].error && (
+                <p className={styles.errorText}> {formState[name].errorText}</p>
+              )}
             </div>
           );
         })}

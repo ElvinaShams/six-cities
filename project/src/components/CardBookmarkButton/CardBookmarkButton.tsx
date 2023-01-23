@@ -1,9 +1,5 @@
 import cn from 'classnames';
-
-import { useAppDispatch } from '../../hooks';
-import { redirectToRoute } from '../../store/action';
 import { getIsAuth } from '../../store/user-process/selectors';
-import { AppRoute } from '../../const';
 
 type CardButtonProps = {
   isFavorite: boolean,
