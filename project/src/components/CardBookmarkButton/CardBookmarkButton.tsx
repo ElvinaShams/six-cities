@@ -1,13 +1,31 @@
+import cn from 'classnames';
+import { getIsAuth } from '../../store/user-process/selectors';
+
 type CardButtonProps = {
-  placeCardActive: string,
   isFavorite: boolean,
+  page: 'place-card' | 'property',
+  changeFavorite: () => void,
 };
 
-function CardBookmarkButton({ placeCardActive, isFavorite }: CardButtonProps) {
+function CardBookmarkButton({
+  page,
+  isFavorite,
+  changeFavorite,
+}: CardButtonProps) {
+  const favoriteCard = `${page}__bookmark-button--active`;
   return (
     <button
-      className={`place-card__bookmark-button ${placeCardActive} button`}
+      className={cn(
+        `${page}__bookmark-button,  button`,
+        isFavorite && favoriteCard
+      )}
       type="button"
+      onClick={() => {
+        if (!getIsAuth) {
+          changeFavorite();
+          return;
+        }
+      }}
     >
       <svg className="place-card__bookmark-icon" width="18" height="19">
         <use xlinkHref="#icon-bookmark"></use>

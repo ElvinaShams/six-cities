@@ -1,17 +1,28 @@
-import { Review } from '../../types/review';
+import { useAppSelector } from '../../hooks';
+import { PropertyForm } from '../PropertyForm';
 import { ReviewItem } from '../ReviewItem/ReviewItem';
+import { selectSortedComments } from '../../store/comments-data/selectors';
+import { getIsAuth } from '../../store/user-process/selectors';
 
-type ReviewsListProps = {
-  reviews: Review[],
-};
+function ReviewsList() {
+  const authStatus = useAppSelector(getIsAuth);
+  const reviews = useAppSelector(selectSortedComments);
 
-function ReviewsList({ reviews }: ReviewsListProps) {
+  console.log(reviews);
+
   return (
-    <ul className="reviews__list">
-      {reviews.map((review) => (
-        <ReviewItem review={review} key={review.id} />
-      ))}
-    </ul>
+    <section className="property__reviews reviews">
+      <h2 className="reviews__title">
+        Reviews &middot;{' '}
+        <span className="reviews__amount">{reviews.length}</span>
+      </h2>
+      <ul className="reviews__list">
+        {reviews.map((review) => (
+          <ReviewItem review={review} key={review.id} />
+        ))}
+      </ul>
+      {authStatus && <PropertyForm />}
+    </section>
   );
 }
 

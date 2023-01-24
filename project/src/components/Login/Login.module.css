@@ -1,0 +1,16 @@
+.login-input {
+  margin: 0;
+}
+
+.login__input-wrapper {
+  margin-bottom: 24px;
+}
+
+.error {
+  text-decoration: underline crimson;
+}
+
+.errorText {
+  color: rgb(237, 23, 23);
+  font-size: 16px;
+}

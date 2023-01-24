@@ -2,13 +2,14 @@ import { Icon, Marker } from 'leaflet';
 import { useRef, useEffect } from 'react';
 import { iconAnchor, IconSize, MapIconUrl } from '../../const';
 import { useMap } from '../../hooks';
-import { City, Points } from '../../types/cities';
+import { City } from '../../types/cities';
 import 'leaflet/dist/leaflet.css';
+import { RoomOffer } from '../../types/room-offer';
 
 type MapProps = {
   className: 'cities' | 'property',
   city: City,
-  points: Points,
+  points: RoomOffer[],
   activeCard?: number | null,
 };
 
@@ -32,8 +33,8 @@ function Map({ className, city, points, activeCard }: MapProps) {
     if (map) {
       points.forEach((point) => {
         const marker = new Marker({
-          lat: point.latitude,
-          lng: point.longitude,
+          lat: point.location.latitude,
+          lng: point.location.longitude,
         });
 
         marker

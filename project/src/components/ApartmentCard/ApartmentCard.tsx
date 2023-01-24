@@ -3,6 +3,8 @@ import { AppRoute } from '../../const';
 import { RoomOffer } from '../../types/room-offer';
 import { getRating } from '../../util';
 import { CardBookmarkButton } from '../CardBookmarkButton';
+import { useAppDispatch } from '../../hooks';
+import { postFavorites } from '../../store/api-action/api-action-offers';
 
 type ApartmentCardProps = {
   card: 'main' | 'favorite' | 'property',
@@ -16,19 +18,16 @@ const properties = {
     className: 'cities',
     width: 260,
     height: 200,
-    placeCardActive: '',
   },
   favorite: {
     className: 'favorites',
     width: 150,
     height: 110,
-    placeCardActive: 'place-card__bookmark-button--active',
   },
   property: {
     className: 'near-places',
     width: 260,
     height: 200,
-    placeCardActive: 'place-card__bookmark-button--active',
   },
 };
 
@@ -38,6 +37,8 @@ function ApartmentCard({
   onMouseLeave,
   card,
 }: ApartmentCardProps) {
+  const dispatch = useAppDispatch();
+
   const {
     id,
     previewImage,
@@ -48,11 +49,19 @@ function ApartmentCard({
     type,
     isFavorite,
   } = roomOffer;
-  const { className, width, height, placeCardActive } = properties[card];
+  const { className, width, height } = properties[card];
 
   const ratingValue = getRating(Math.round(rating));
 
   const getFirstCapital = (str: string) => str[0]?.toUpperCase() + str.slice(1);
+
+  const changeFavorite = () => {
+    if (roomOffer) {
+      const { id, isFavorite } = roomOffer;
+
+      dispatch(postFavorites({ id, isFavorite }));
+    }
+  };
 
   return (
     <article
@@ -87,8 +96,9 @@ function ApartmentCard({
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
           <CardBookmarkButton
-            placeCardActive={placeCardActive}
+            page="place-card"
             isFavorite={isFavorite}
+            changeFavorite={changeFavorite}
           />
         </div>
         <div className="place-card__rating rating">

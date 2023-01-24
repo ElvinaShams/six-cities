@@ -6,7 +6,7 @@ export type Location = {
 
 export type City = {
   name: string,
-  location:Location,
+  location: Location,
 };
 
 export type Host = {
@@ -17,10 +17,14 @@ export type Host = {
 };
 
 export type Point = {
-  id: number;
-  latitude: number;
-  longitude: number;
+  id: number,
+  latitude: number,
+  longitude: number,
+};
+
+export type FavoriteType = {
+  id: number,
+  isFavorite: boolean,
 };
 
 export type Points = Point[];
-

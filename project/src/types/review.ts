@@ -1,7 +1,3 @@
-import { reviews } from './../mocks/reviews';
-import { RoomOffer } from './room-offer';
-import { Id } from "react-toastify"
-
 export type Review = {
   id: number,
   comment: string,
@@ -12,5 +8,12 @@ export type Review = {
     id: number,
     isPro: boolean,
     name: string,
-  }
-}
+  },
+};
+
+export type ReviewCommentPayload = {
+  comment: string,
+  rating: number,
+  id: number,
+  onSuccess: () => void,
+};

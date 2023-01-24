@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { CardList } from '../../components/CardList';
 import { Tabs } from '../../components/Tabs';
 import { Map } from '../../components/Map';
@@ -5,32 +6,44 @@ import { Sort } from '../../components/Sort';
 import { Layout } from '../../components/Layout';
 import { useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
-import { changeCity } from '../../store/action';
 import { sortOffers } from '../../util';
 import { RoomOffer } from '../../types/room-offer';
+import { changeCity } from '../../store/app-process/app-process';
+import { getOffers, getOffersStatus } from '../../store/offers-data/selectors';
+import { getCity, getSortType } from '../../store/app-process/selectors';
+import { fetchOffersList } from '../../store/api-action/api-action-offers';
+import { checkAuth } from '../../store/api-action/api-action-user';
+import { getIsAuth } from '../../store/user-process/selectors';
+import { Spinner } from '../../components/Spinner';
 
 function Main(): JSX.Element {
   const [activeCard, setActiveCard] = useState<number | null>(null);
   const dispatch = useAppDispatch();
-  const currentCityName = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.roomOffers);
-  const sortType = useAppSelector((state) => state.sortType);
+  const currentCityName = useAppSelector(getCity);
+  const offers = useAppSelector(getOffers);
+  const sortType = useAppSelector(getSortType);
+  const offersStatus = useAppSelector(getOffersStatus);
+
+  useEffect(() => {
+    dispatch(fetchOffersList());
+    dispatch(checkAuth());
+  }, [dispatch]);
+
+  if (!getIsAuth || offersStatus.isLoading) {
+    return <Spinner />;
+  }
+
   const filteredOffers = offers.filter(
     (roomOffer) => roomOffer.city.name === currentCityName
   );
 
   const sortOffersType: RoomOffer[] = sortOffers(sortType, filteredOffers);
+
   const handleChangeCity = (name: string) => {
     dispatch(changeCity(name));
   };
 
   const handleMouseOver = (id: number | null) => setActiveCard(id);
-
-  const points = offers.map((offer) => ({
-    id: offer.id,
-    latitude: offer.location.latitude,
-    longitude: offer.location.longitude,
-  }));
 
   return (
     <>
@@ -47,7 +60,7 @@ function Main(): JSX.Element {
                 <section className="cities__places places">
                   <h2 className="visually-hidden">Places</h2>
                   <b className="places__found">
-                    {offers.length} places to stay in {currentCityName}
+                    {filteredOffers.length} places to stay in {currentCityName}
                   </b>
                   <Sort />
                   <CardList
@@ -60,7 +73,7 @@ function Main(): JSX.Element {
                   <Map
                     className="cities"
                     city={sortOffersType[0].city}
-                    points={points}
+                    points={filteredOffers}
                     activeCard={activeCard}
                   />
                 </div>

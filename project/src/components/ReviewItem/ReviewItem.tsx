@@ -1,6 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../../hooks';
 import { Review } from '../../types/review';
-import { getRating } from '../../util';
+import { getDate, getRating } from '../../util';
 
 type ReviewItemProps = {
   review: Review,
@@ -11,6 +10,9 @@ function ReviewItem({ review }: ReviewItemProps) {
   const { avatarUrl, name } = review.user;
 
   const ratingValue = getRating(Math.round(rating));
+
+  const dateFormat = getDate(date);
+  console.log(dateFormat);
 
   return (
     <li className="reviews__item">
@@ -33,7 +35,7 @@ function ReviewItem({ review }: ReviewItemProps) {
         </div>
         <p className="reviews__text">{comment}</p>
         <time className="reviews__time" dateTime={date}>
-          April 2019
+          {dateFormat}
         </time>
       </div>
     </li>

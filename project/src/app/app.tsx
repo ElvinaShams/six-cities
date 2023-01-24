@@ -1,4 +1,4 @@
-import { AppRoute, AuthStatus } from '../const';
+import { AppRoute } from '../const';
 import { Route, Routes } from 'react-router-dom';
 import { Main } from '../pages/Main';
 import { LoginPage } from '../pages/LoginPage';
@@ -6,23 +6,17 @@ import { Favorites } from '../pages/Favorites';
 import { Property } from '../pages/Property';
 import { NotFound } from '../pages/NotFound';
 import { PrivateRoute } from '../components/PrivateRoute';
-import { Review } from '../types/review';
 import { useAppSelector } from '../hooks';
-import { Spinner } from '../components/Spinner';
+import { getAuthorizationStatus } from '../store/user-process/selectors';
+import { getOffersStatus } from '../store/offers-data/selectors';
+import { ErrorMessage } from '../components/ErrorMessage';
 
-type AppProps = {
-  reviews: Review[],
-};
+function App(): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const offersStatus = useAppSelector(getOffersStatus);
 
-function App({ reviews }: AppProps): JSX.Element {
-  const authorizationStatus = useAppSelector((state) => state.authStatus);
-  const isOffersDataLoading = useAppSelector(
-    (state) => state.isOffersDataLoading
-  );
-  const roomOffers = useAppSelector((state) => state.roomOffers);
-
-  if (authorizationStatus === AuthStatus.unknown || isOffersDataLoading) {
-    return <Spinner />;
+  if (offersStatus.isError) {
+    return <ErrorMessage />;
   }
 
   return (
@@ -38,17 +32,13 @@ function App({ reviews }: AppProps): JSX.Element {
             redirectTo={AppRoute.Main}
             authorizationStatus={authorizationStatus}
           >
-            <Favorites roomOffers={roomOffers} />
+            <Favorites />
           </PrivateRoute>
         }
       />
-      <Route
-        path={AppRoute.Room}
-        element={<Property roomOffers={roomOffers} />}
-      />
+      <Route path={AppRoute.Room} element={<Property />} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
-
 export default App;

@@ -2,41 +2,77 @@ import { PropertyTextarea } from '../PropertyTextarea';
 import { useState, ChangeEvent } from 'react';
 import { REVIEW_MIN_LENGTH, REVIEW_MAX_LENGTH, RatingValue } from '../../const';
 import { FormRating } from '../FormRating';
+import { useParams } from 'react-router-dom';
+import { FormEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { selectPostCommentStatus } from '../../store/comments-data/selectors';
+import { postComment } from '../../store/api-action/api-action-offers';
 
 function PropertyForm(): JSX.Element {
-  const [rating, setRating] = useState('0');
-  const [review, setReview] = useState('');
+  const dispatch = useAppDispatch();
+  const { isLoading } = useAppSelector(selectPostCommentStatus);
+  const [rating, setRating] = useState('');
+  const [comment, setComment] = useState('');
 
-  const isDisabled =
-    !rating ||
-    review.length < REVIEW_MIN_LENGTH ||
-    review.length > REVIEW_MAX_LENGTH;
+  const { id } = useParams();
+
+  const clearForm = () => {
+    setComment('');
+    setRating('');
+  };
+
+  const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (id) {
+      dispatch(
+        postComment({
+          id: Number(id),
+          rating: Number(rating),
+          comment,
+          onSuccess: clearForm,
+        })
+      );
+    }
+  };
+
+  const isValid =
+    comment.length > REVIEW_MIN_LENGTH && comment.length < REVIEW_MAX_LENGTH;
+
+  const isDisabled = !rating || !isValid;
 
   const handleChange = (event: ChangeEvent<HTMLTextAreaElement>) =>
-    setReview(event.target.value);
+    setComment(event.target.value);
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLInputElement> & {
-      target: HTMLButtonElement,
-    }
-  ) => setRating(event.target.value);
+  const handleRatingChange = (evt: ChangeEvent<HTMLInputElement>) =>
+    setRating(evt.target.value);
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleFormSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
       <div className="reviews__rating-form form__rating">
         {Object.entries(RatingValue).map(([ratingTitle, ratingValue]) => (
           <FormRating
-            handleClick={handleClick}
+            onChange={handleRatingChange}
             ratingValue={ratingValue}
             ratingTitle={ratingTitle}
             key={ratingValue}
+            disabled={isLoading}
           />
         ))}
       </div>
-      <PropertyTextarea onChange={handleChange} review={review} />
+      <PropertyTextarea
+        onChange={handleChange}
+        review={comment}
+        disabled={isLoading}
+      />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">
           To submit review please make sure to set{' '}
@@ -46,9 +82,9 @@ function PropertyForm(): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={isDisabled}
+          disabled={isDisabled || isLoading}
         >
-          Submit
+          {isLoading ? 'Submiting' : 'Submit'}
         </button>
       </div>
     </form>

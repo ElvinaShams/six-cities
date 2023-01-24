@@ -1,4 +1,4 @@
-import { City, Host, Location } from "./cities";
+import { City, Host, Location } from './cities';
 
 export type RoomOffer = {
   city: City,
