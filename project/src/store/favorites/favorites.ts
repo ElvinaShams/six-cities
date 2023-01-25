@@ -1,6 +1,6 @@
+import { RoomOffer } from './../../types/room-offer';
 import { createSlice } from '@reduxjs/toolkit';
 import { FetchStatus, NameSpace } from '../../const';
-import { RoomOffer } from '../../types/room-offer';
 import { fetchFavorites, postFavorites } from '../api-action/api-action-offers';
 import { logout } from '../api-action/api-action-user';
 
@@ -37,8 +37,12 @@ export const favorites = createSlice({
       })
       .addCase(postFavorites.fulfilled, (state, action) => {
         state.postStatus = FetchStatus.Success;
-        if (action.payload.isFavorite) {
+        if (action.payload.isFavorite === true) {
           state.favorites.push(action.payload);
+        } else {
+          state.favorites = state.favorites.filter(
+            (offer) => offer.id !== action.payload.id
+          );
         }
       })
       .addCase(postFavorites.rejected, (state) => {

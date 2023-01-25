@@ -5,6 +5,7 @@ import {
   fetchNearby,
   fetchProperty,
   fetchOffersList,
+  postFavorites,
 } from '../api-action/api-action-offers';
 
 type InitialState = {
@@ -50,6 +51,12 @@ export const offersData = createSlice({
       .addCase(fetchProperty.fulfilled, (state, action) => {
         state.property = action.payload;
         state.propertyStatus = FetchStatus.Success;
+      })
+      .addCase(postFavorites.fulfilled, (state, action) => {
+        state.roomOffers.forEach((offer) => {
+          if (offer.id === action.payload.id)
+            offer.isFavorite = action.payload.isFavorite;
+        });
       })
       .addCase(fetchNearby.fulfilled, (state, action) => {
         state.nearby = action.payload;
