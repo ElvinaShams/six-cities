@@ -2,27 +2,26 @@ import { FavoriteList } from '../../components/FavoriteList';
 import { FavoritesEmpty } from '../../components/FavoritesEmpty';
 import { Footer } from '../../components/Footer';
 import { Layout } from '../../components/Layout';
-import { Spinner } from '../../components/Spinner';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import {
   getFavorites,
-  getFavoritesStatus,
+  selectFavoritesStatus,
 } from '../../store/favorites/selectors';
-import { NotFound } from '../NotFound';
 import { useEffect } from 'react';
 import { fetchFavorites } from '../../store/api-action/api-action-offers';
+import { ErrorMessage } from '../../components/ErrorMessage';
 
 function Favorites(): JSX.Element {
   const dispatch = useAppDispatch();
   const favoriteOffers = useAppSelector(getFavorites);
-  const favoritesStatus = useAppSelector(getFavoritesStatus);
+  const favoritesStatus = useAppSelector(selectFavoritesStatus);
 
   useEffect(() => {
-    dispatch(fetchFavorites);
+    dispatch(fetchFavorites());
   }, [dispatch]);
 
   if (favoritesStatus.isError) {
-    return <NotFound />;
+    return <ErrorMessage />;
   }
 
   const renderFavoriteContent = () => {

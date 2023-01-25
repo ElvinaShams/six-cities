@@ -5,6 +5,7 @@ import { getRating } from '../../util';
 import { CardBookmarkButton } from '../CardBookmarkButton';
 import { useAppDispatch } from '../../hooks';
 import { postFavorites } from '../../store/api-action/api-action-offers';
+import cn from 'classnames';
 
 type ApartmentCardProps = {
   card: 'main' | 'favorite' | 'property',
@@ -56,12 +57,17 @@ function ApartmentCard({
   const getFirstCapital = (str: string) => str[0]?.toUpperCase() + str.slice(1);
 
   const changeFavorite = () => {
-    if (roomOffer) {
-      const { id, isFavorite } = roomOffer;
-
-      dispatch(postFavorites({ id, isFavorite }));
-    }
+    dispatch(
+      postFavorites({
+        hotelId: id,
+        status: isFavorite ? 0 : 1,
+      })
+    );
   };
+
+  const infoClassName = cn('place-card__info', {
+    'favorites__card-info': card === 'favorite',
+  });
 
   return (
     <article
@@ -89,7 +95,7 @@ function ApartmentCard({
           />
         </Link>
       </div>
-      <div className="place-card__info favorites__card-info">
+      <div className={infoClassName}>
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
             <b className="place-card__price-value">&euro;{price}</b>

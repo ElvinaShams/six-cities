@@ -22,9 +22,9 @@ export type Point = {
   longitude: number,
 };
 
-export type FavoriteType = {
-  id: number,
-  isFavorite: boolean,
+export type FavoriteTypePayload = {
+  hotelId: number,
+  status: number,
 };
 
 export type Points = Point[];

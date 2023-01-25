@@ -6,7 +6,7 @@ import { RoomOffer } from '../../types/room-offer';
 import { APIRoute, AppRoute } from '../../const';
 import { Review, ReviewCommentPayload } from '../../types/review';
 import { pushNotification } from '../notification/notification';
-import { FavoriteType } from '../../types/cities';
+import { FavoriteTypePayload } from '../../types/cities';
 import { redirectToRoute } from '../action';
 
 const fetchOffersList = createAsyncThunk<
@@ -174,7 +174,7 @@ const fetchFavorites = createAsyncThunk<
 
 const postFavorites = createAsyncThunk<
   RoomOffer,
-  FavoriteType,
+  FavoriteTypePayload,
   {
     dispatch: AppDispatch,
     state: State,
@@ -182,11 +182,10 @@ const postFavorites = createAsyncThunk<
   }
 >(
   'favorite/postFavorites',
-  async ({ id, isFavorite }, { dispatch, extra: api }) => {
+  async ({ hotelId, status }, { dispatch, extra: api }) => {
     try {
-      const status = isFavorite ? 1 : 0;
       const { data } = await api.post<RoomOffer>(
-        `${APIRoute.Favorites}/${id}/${status}`
+        `${APIRoute.Favorites}/${hotelId}/${status}`
       );
 
       return data;

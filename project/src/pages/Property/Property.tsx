@@ -65,12 +65,13 @@ function Property(): JSX.Element {
 
   const ratingHotel = (Math.round(rating) * 100) / MAX_RATING;
 
-  const changeFavorite = () => {
-    if (property) {
-      const { id, isFavorite } = property;
-
-      dispatch(postFavorites({ id, isFavorite }));
-    }
+  const handleFavoriteButtonClick = () => {
+    dispatch(
+      postFavorites({
+        hotelId: Number(id),
+        status: isFavorite ? 0 : 1,
+      })
+    );
   };
 
   return (
@@ -96,7 +97,7 @@ function Property(): JSX.Element {
                   <CardBookmarkButton
                     page="property"
                     isFavorite={isFavorite}
-                    changeFavorite={changeFavorite}
+                    changeFavorite={handleFavoriteButtonClick}
                   />
                 </div>
                 <div className="property__rating rating">

@@ -11,10 +11,10 @@ export const getFavoritesFetchStatus = (state: State): FetchStatus =>
 export const getPostFavoriteStatus = (state: State): FetchStatus =>
   state[NameSpace.Favorites].postStatus;
 
-export const getFavoritesStatus = createSelector(
+export const selectFavoritesStatus = createSelector(
   [getFavoritesFetchStatus],
   (status) => ({
-    isLoading: [FetchStatus.Idle, FetchStatus.Loading].includes(status),
+    isLoading: status === FetchStatus.Loading,
     isSuccess: status === FetchStatus.Success,
     isError: status === FetchStatus.Failed,
   })

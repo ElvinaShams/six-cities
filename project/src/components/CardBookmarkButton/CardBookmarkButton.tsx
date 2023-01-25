@@ -1,5 +1,8 @@
 import cn from 'classnames';
-import { getIsAuth } from '../../store/user-process/selectors';
+import { AppRoute, AuthStatus } from '../../const';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { redirectToRoute } from '../../store/action';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 type CardButtonProps = {
   isFavorite: boolean,
@@ -12,20 +15,28 @@ function CardBookmarkButton({
   isFavorite,
   changeFavorite,
 }: CardButtonProps) {
-  const favoriteCard = `${page}__bookmark-button--active`;
+  const dispatch = useAppDispatch();
+
+  const authStatus = useAppSelector(getAuthorizationStatus);
+
+  const onClick = () => {
+    if (authStatus === AuthStatus.Auth) {
+      changeFavorite();
+    } else {
+      dispatch(redirectToRoute(AppRoute.SignIn));
+    }
+  };
+
+  const classNameActive = `${page}__bookmark-button--active`;
+
   return (
     <button
       className={cn(
         `${page}__bookmark-button,  button`,
-        isFavorite && favoriteCard
+        isFavorite && classNameActive
       )}
       type="button"
-      onClick={() => {
-        if (!getIsAuth) {
-          changeFavorite();
-          return;
-        }
-      }}
+      onClick={onClick}
     >
       <svg className="place-card__bookmark-icon" width="18" height="19">
         <use xlinkHref="#icon-bookmark"></use>
