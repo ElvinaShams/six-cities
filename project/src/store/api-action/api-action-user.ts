@@ -7,6 +7,7 @@ import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { dropToken, saveToken } from '../../services/token';
 import { redirectToRoute } from '../action';
+import { fetchOffersList } from './api-action-offers';
 
 const checkAuth = createAsyncThunk<
   UserData,
@@ -59,6 +60,7 @@ const logout = createAsyncThunk<
   try {
     await api.delete(APIRoute.Logout);
     dropToken();
+    dispatch(fetchOffersList());
   } catch (err) {
     throw err;
   }

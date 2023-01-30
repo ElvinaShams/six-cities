@@ -57,6 +57,15 @@ export const offersData = createSlice({
           if (offer.id === action.payload.id)
             offer.isFavorite = action.payload.isFavorite;
         });
+
+        state.nearby.forEach((offer) => {
+          if (offer.id === action.payload.id)
+            offer.isFavorite = action.payload.isFavorite;
+        });
+
+        if (state.property?.id === action.payload.id) {
+          state.property.isFavorite = action.payload.isFavorite;
+        }
       })
       .addCase(fetchNearby.fulfilled, (state, action) => {
         state.nearby = action.payload;

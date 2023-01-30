@@ -103,6 +103,7 @@ function ApartmentCard({
           </div>
           <CardBookmarkButton
             page="place-card"
+            size="small"
             isFavorite={isFavorite}
             changeFavorite={changeFavorite}
           />

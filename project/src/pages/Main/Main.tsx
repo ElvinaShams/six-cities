@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { CardList } from '../../components/CardList';
+import { useEffect, useCallback } from 'react';
+import CardList from '../../components/CardList/CardList';
 import { Tabs } from '../../components/Tabs';
 import { Map } from '../../components/Map';
 import { Sort } from '../../components/Sort';
@@ -29,6 +29,11 @@ function Main(): JSX.Element {
     dispatch(checkAuth());
   }, [dispatch]);
 
+  const handleMouseOver = useCallback(
+    (id: number | null) => setActiveCard(id),
+    []
+  );
+
   if (!getIsAuth || offersStatus.isLoading) {
     return <Spinner />;
   }
@@ -42,8 +47,6 @@ function Main(): JSX.Element {
   const handleChangeCity = (name: string) => {
     dispatch(changeCity(name));
   };
-
-  const handleMouseOver = (id: number | null) => setActiveCard(id);
 
   return (
     <>

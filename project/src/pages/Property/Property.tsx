@@ -2,7 +2,7 @@ import { ErrorMessage } from '../../components/ErrorMessage';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CardBookmarkButton } from '../../components/CardBookmarkButton';
-import { CardList } from '../../components/CardList';
+import CardList from '../../components/CardList/CardList';
 import { GalleryPhotos } from '../../components/GalleryPhotos';
 import { HostApartment } from '../../components/HostApartment';
 import { Layout } from '../../components/Layout';
@@ -96,6 +96,7 @@ function Property(): JSX.Element {
                   <h1 className="property__name">{title}</h1>
                   <CardBookmarkButton
                     page="property"
+                    size="big"
                     isFavorite={isFavorite}
                     changeFavorite={handleFavoriteButtonClick}
                   />

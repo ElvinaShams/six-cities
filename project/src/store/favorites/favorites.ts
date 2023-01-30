@@ -37,7 +37,8 @@ export const favorites = createSlice({
       })
       .addCase(postFavorites.fulfilled, (state, action) => {
         state.postStatus = FetchStatus.Success;
-        if (action.payload.isFavorite === true) {
+
+        if (action.payload.isFavorite) {
           state.favorites.push(action.payload);
         } else {
           state.favorites = state.favorites.filter(
@@ -47,9 +48,6 @@ export const favorites = createSlice({
       })
       .addCase(postFavorites.rejected, (state) => {
         state.postStatus = FetchStatus.Failed;
-      })
-      .addCase(logout.fulfilled, (state) => {
-        state.favorites = [];
       });
   },
 });
