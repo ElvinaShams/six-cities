@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { AppRoute, AuthStatus } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { logout } from '../../store/api-action/api-action-user';
-import { getFavorites } from '../../store/favorites/selectors';
+import { selectFavoritesStatus } from '../../store/favorites/selectors';
+import { getOffers } from '../../store/offers-data/selectors';
 import {
   getAuthorizationStatus,
   getUserData,
@@ -13,7 +14,10 @@ function UserNav() {
   const dispatch = useAppDispatch();
 
   const userData = useAppSelector(getUserData);
-  const favoriteOffers = useAppSelector(getFavorites);
+  const offers = useAppSelector(getOffers);
+  const { isLoading } = useAppSelector(selectFavoritesStatus);
+  const favoriteOffers = offers.filter((offer) => offer.isFavorite);
+
   const isAuth: boolean =
     useAppSelector(getAuthorizationStatus) === AuthStatus.Auth;
 
@@ -44,7 +48,7 @@ function UserNav() {
                   {userData?.email}
                 </span>
                 <span className="header__favorite-count">
-                  {favoriteOffers.length}
+                  {isLoading ? 'Loading...' : favoriteOffers.length}
                 </span>
               </Link>
             </li>

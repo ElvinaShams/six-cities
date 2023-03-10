@@ -1,5 +1,6 @@
 import { RoomOffer } from '../../types/room-offer';
 import { ApartmentCard } from '../ApartmentCard';
+import { memo } from 'react';
 
 type CardListProps = {
   roomOffers: RoomOffer[],
@@ -36,4 +37,4 @@ function CardList({ roomOffers, page, onMouseOver}: CardListProps) {
   );
 }
 
-export { CardList };
+export default  memo(CardList);

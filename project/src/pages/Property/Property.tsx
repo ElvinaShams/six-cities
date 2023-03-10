@@ -2,7 +2,7 @@ import { ErrorMessage } from '../../components/ErrorMessage';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { CardBookmarkButton } from '../../components/CardBookmarkButton';
-import { CardList } from '../../components/CardList';
+import CardList from '../../components/CardList/CardList';
 import { GalleryPhotos } from '../../components/GalleryPhotos';
 import { HostApartment } from '../../components/HostApartment';
 import { Layout } from '../../components/Layout';
@@ -65,12 +65,13 @@ function Property(): JSX.Element {
 
   const ratingHotel = (Math.round(rating) * 100) / MAX_RATING;
 
-  const changeFavorite = () => {
-    if (property) {
-      const { id, isFavorite } = property;
-
-      dispatch(postFavorites({ id, isFavorite }));
-    }
+  const handleFavoriteButtonClick = () => {
+    dispatch(
+      postFavorites({
+        hotelId: Number(id),
+        status: isFavorite ? 0 : 1,
+      })
+    );
   };
 
   return (
@@ -95,8 +96,9 @@ function Property(): JSX.Element {
                   <h1 className="property__name">{title}</h1>
                   <CardBookmarkButton
                     page="property"
+                    size="big"
                     isFavorite={isFavorite}
-                    changeFavorite={changeFavorite}
+                    changeFavorite={handleFavoriteButtonClick}
                   />
                 </div>
                 <div className="property__rating rating">
